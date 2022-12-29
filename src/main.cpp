@@ -13,6 +13,9 @@ void drawParedes (glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawSofa (glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawVentilador(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawAspas(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void drawMesa(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void drawPata(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+
 void controladorTiempo();
 
 void funFramebufferSize(GLFWwindow* window, int width, int height);
@@ -161,6 +164,11 @@ void renderScene() {
 
     // Dibujamos mesa (Raúl)
 
+    // Dibujamos mesa (Iván)
+    glm::mat4 TMesa = glm::translate(I, glm::vec3(-8, 0, -5));
+    drawMesa(P, V, TMesa);
+
+    // Dibujamos velas (Iván)
 
 }
 
@@ -258,6 +266,32 @@ void drawAspas(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     glm::mat4 TAspa3 = glm::translate(I, glm::vec3(0.55, 1, -0.3));
     glm::mat4 Ry90Pos = glm::rotate(I, glm::radians(120.0f), glm::vec3(0, 1, 0));
     drawObject(triangle, glm::vec3(0.139, 0.069, 0.019), P, V, M*TAspa3*Ry90Pos*Rx90*SAspa1);
+
+}
+
+void drawMesa(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+
+    // Patas
+    glm::mat4 T1 = glm::translate(I, glm::vec3(2, 0, 0));
+    glm::mat4 T2 = glm::translate(I, glm::vec3(0, 0, 1));
+    glm::mat4 T3 = glm::translate(I, glm::vec3(2, 0, 1));
+    drawPata(P, V, M);
+    drawPata(P, V, M*T1);
+    drawPata(P, V, M*T2);
+    drawPata(P, V, M*T3);
+
+    // Tablero
+    glm::mat4 STablero = glm::scale(I, glm::vec3(1.5, 0.1, 0.7));
+    glm::mat4 TTablero = glm::translate(I, glm::vec3(0.95, 1.15, 0.5));
+    drawObject(cube, glm::vec3(0.139, 0.069, 0.019), P, V, M*TTablero*STablero);
+
+}
+
+void drawPata(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+
+    glm::mat4 S = glm::scale(I, glm::vec3(0.10, 0.6, 0.10));
+    glm::mat4 T = glm::translate(I, glm::vec3(0, 0.6, 0));
+    drawObject(cube, glm::vec3(0.139, 0.069, 0.019), P, V, M*T*S);
 
 }
 
