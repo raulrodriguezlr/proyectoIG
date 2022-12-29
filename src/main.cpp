@@ -31,11 +31,13 @@ Model sphere;
 Model triangle;
 
 // Viewport
-int w = 500;
-int h = 500;
+int w = 1000;
+int h = 1000;
 
 // Animaciones
-float rotX = 0.0;
+float desY = 0.0;
+float desX = 0.0;
+
 float rotY = 0.0;
 float desZ = 0.0;
 
@@ -135,9 +137,9 @@ void renderScene() {
     float x = 10.0f*glm::cos(glm::radians(alphaY))*glm::sin(glm::radians(alphaX));
     float y = 10.0f*glm::sin(glm::radians(alphaY));
     float z = 10.0f*glm::cos(glm::radians(alphaY))*glm::cos(glm::radians(alphaX));
-    glm::vec3 eye   (  x,   y,   z);
-    glm::vec3 center(0.0, 8.0,  0.0);
-    glm::vec3 up    (0.0, 1.0,  0.0);
+    glm::vec3 eye   (  x+desX,   y+desY,   z);
+    glm::vec3 center(0.0+desX, 3.0+desY,  0.0);
+    glm::vec3 up    (0.0, 3.0,  0.0);
     glm::mat4 V = glm::lookAt(eye, center, up);
 
     // Dibujamos el suelo
@@ -287,10 +289,10 @@ void funFramebufferSize(GLFWwindow* window, int width, int height) {
 void funKey(GLFWwindow* window, int key  , int scancode, int action, int mods) {
 
     switch(key) {
-        case GLFW_KEY_UP:    rotX -= 5.0f;   break;
-        case GLFW_KEY_DOWN:  rotX += 5.0f;   break;
-        case GLFW_KEY_LEFT:  rotY -= 5.0f;   break;
-        case GLFW_KEY_RIGHT: rotY += 5.0f;   break;
+        case GLFW_KEY_UP:    desY += 1.0f;   break;
+        case GLFW_KEY_DOWN:  desY -= 1.0f;   break;
+        case GLFW_KEY_LEFT:  desX -= 1.0f;   break;
+        case GLFW_KEY_RIGHT: desX += 1.0f;   break;
         case GLFW_KEY_Z:
             if(mods==GLFW_MOD_SHIFT) desZ -= desZ > -24.0f ? 0.1f : 0.0f;
             else                     desZ += desZ <   5.0f ? 0.1f : 0.0f;
@@ -300,7 +302,7 @@ void funKey(GLFWwindow* window, int key  , int scancode, int action, int mods) {
                 rotVentilador+=1;
             break;
         default:
-            rotX = 0.0f;
+            desY = 0.0f;
             rotY = 0.0f;
             break;
     }
@@ -313,11 +315,10 @@ void funScroll(GLFWwindow* window, double xoffset, double yoffset) {
     if(yoffset<0) fovy += fovy<90.0f ? 5.0f : 0.0f;
 
 }
-
 void funCursorPos(GLFWwindow* window, double xpos, double ypos) {
 
     if(glfwGetMouseButton(window,GLFW_MOUSE_BUTTON_LEFT)==GLFW_RELEASE) return;
-
+    //desY=0;
     float limY = 89.0;
     alphaX = 90.0*(2.0*xpos/(float)w - 1.0);
     alphaY = 90.0*(1.0 - 2.0*ypos/(float)h);
