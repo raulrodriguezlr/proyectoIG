@@ -1,0 +1,172 @@
+## This file contains all the build statements describing the
+# compilation DAG.
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# 
+# Which is the root file.
+# =============================================================================
+
+# =============================================================================
+# Project: proyectoFinal
+# Configurations: Debug
+# =============================================================================
+
+#############################################
+# Minimal version of Ninja required by this file
+
+ninja_required_version = 1.8
+
+
+#############################################
+# Set configuration variable for custom commands.
+
+CONFIGURATION = Debug
+# =============================================================================
+# Include auxiliary files.
+
+
+#############################################
+# Include rules file.
+
+include CMakeFiles/rules.ninja
+
+# =============================================================================
+
+#############################################
+# Logical path to working directory; prefix for absolute paths.
+
+cmake_ninja_workdir = /Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/cmake-build-debug/
+# =============================================================================
+# Object build statements for EXECUTABLE target proyectoFinal
+
+
+#############################################
+# Order-only phony target for proyectoFinal
+
+build cmake_object_order_depends_target_proyectoFinal: phony || CMakeFiles/proyectoFinal.dir
+
+build CMakeFiles/proyectoFinal.dir/src/Model.cpp.o: CXX_COMPILER__proyectoFinal_Debug /Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/src/Model.cpp || cmake_object_order_depends_target_proyectoFinal
+  DEP_FILE = CMakeFiles/proyectoFinal.dir/src/Model.cpp.o.d
+  FLAGS = -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=13.0 -std=gnu++14
+  INCLUDES = -I/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/src -I/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glew/include -I/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glfw/include -I/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glm/include -I/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/assimp/include -I/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/freeimage/include
+  OBJECT_DIR = CMakeFiles/proyectoFinal.dir
+  OBJECT_FILE_DIR = CMakeFiles/proyectoFinal.dir/src
+
+build CMakeFiles/proyectoFinal.dir/src/Shaders.cpp.o: CXX_COMPILER__proyectoFinal_Debug /Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/src/Shaders.cpp || cmake_object_order_depends_target_proyectoFinal
+  DEP_FILE = CMakeFiles/proyectoFinal.dir/src/Shaders.cpp.o.d
+  FLAGS = -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=13.0 -std=gnu++14
+  INCLUDES = -I/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/src -I/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glew/include -I/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glfw/include -I/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glm/include -I/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/assimp/include -I/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/freeimage/include
+  OBJECT_DIR = CMakeFiles/proyectoFinal.dir
+  OBJECT_FILE_DIR = CMakeFiles/proyectoFinal.dir/src
+
+build CMakeFiles/proyectoFinal.dir/src/main.cpp.o: CXX_COMPILER__proyectoFinal_Debug /Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/src/main.cpp || cmake_object_order_depends_target_proyectoFinal
+  DEP_FILE = CMakeFiles/proyectoFinal.dir/src/main.cpp.o.d
+  FLAGS = -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=13.0 -std=gnu++14
+  INCLUDES = -I/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/src -I/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glew/include -I/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glfw/include -I/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glm/include -I/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/assimp/include -I/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/freeimage/include
+  OBJECT_DIR = CMakeFiles/proyectoFinal.dir
+  OBJECT_FILE_DIR = CMakeFiles/proyectoFinal.dir/src
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target proyectoFinal
+
+
+#############################################
+# Link the executable binary/proyectoFinal
+
+build binary/proyectoFinal: CXX_EXECUTABLE_LINKER__proyectoFinal_Debug CMakeFiles/proyectoFinal.dir/src/Model.cpp.o CMakeFiles/proyectoFinal.dir/src/Shaders.cpp.o CMakeFiles/proyectoFinal.dir/src/main.cpp.o
+  FLAGS = -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=13.0
+  LINK_LIBRARIES = -Wl,-rpath,/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glew/lib -Wl,-rpath,/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glfw/lib -Wl,-rpath,/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glm/lib -Wl,-rpath,/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/assimp/lib -Wl,-rpath,/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/freeimage/lib  -lopengl32  -lglu32  -lglew32  -lglfw3  -lassimp  -lfreeimage
+  LINK_PATH = -L/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glew/lib   -L/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glfw/lib   -L/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glm/lib   -L/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/assimp/lib   -L/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/freeimage/lib
+  OBJECT_DIR = CMakeFiles/proyectoFinal.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = binary/proyectoFinal
+  TARGET_PDB = proyectoFinal.dbg
+
+
+#############################################
+# Utility command for edit_cache
+
+build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/cmake-build-debug && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build edit_cache: phony CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/cmake-build-debug && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake --regenerate-during-build -S/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG -B/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/cmake-build-debug
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build rebuild_cache: phony CMakeFiles/rebuild_cache.util
+
+# =============================================================================
+# Target aliases.
+
+build proyectoFinal: phony binary/proyectoFinal
+
+# =============================================================================
+# Folder targets.
+
+# =============================================================================
+
+#############################################
+# Folder: /Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/cmake-build-debug
+
+build all: phony binary/proyectoFinal
+
+# =============================================================================
+# Built-in targets
+
+
+#############################################
+# Phony target to force glob verification run.
+
+build /Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/cmake-build-debug/CMakeFiles/VerifyGlobs.cmake_force: phony
+
+
+#############################################
+# Re-run CMake to check if globbed directories changed.
+
+build /Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/cmake-build-debug/CMakeFiles/cmake.verify_globs: VERIFY_GLOBS | /Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/cmake-build-debug/CMakeFiles/VerifyGlobs.cmake_force
+  pool = console
+  restat = 1
+
+
+#############################################
+# Re-run CMake if any of its inputs changed.
+
+build build.ninja: RERUN_CMAKE /Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/cmake-build-debug/CMakeFiles/cmake.verify_globs | ../CMakeLists.txt /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeCInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeCXXInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeCommonLanguageInclude.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeGenericSystem.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeInitializeConfigs.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeLanguageInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeSystemSpecificInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeSystemSpecificInitialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Compiler/AppleClang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Compiler/AppleClang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Compiler/Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Compiler/GNU.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Apple-AppleClang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Apple-AppleClang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Apple-Clang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Apple-Clang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Apple-Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Darwin-Initialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Darwin.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/UnixPaths.cmake /Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/cmake-build-debug/CMakeFiles/VerifyGlobs.cmake CMakeCache.txt CMakeFiles/3.23.2/CMakeCCompiler.cmake CMakeFiles/3.23.2/CMakeCXXCompiler.cmake CMakeFiles/3.23.2/CMakeSystem.cmake
+  pool = console
+
+
+#############################################
+# A missing CMake input file is not an error.
+
+build ../CMakeLists.txt /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeCInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeCXXInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeCommonLanguageInclude.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeGenericSystem.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeInitializeConfigs.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeLanguageInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeSystemSpecificInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeSystemSpecificInitialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Compiler/AppleClang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Compiler/AppleClang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Compiler/Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Compiler/GNU.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Apple-AppleClang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Apple-AppleClang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Apple-Clang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Apple-Clang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Apple-Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Darwin-Initialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Darwin.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/UnixPaths.cmake /Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/cmake-build-debug/CMakeFiles/VerifyGlobs.cmake CMakeCache.txt CMakeFiles/3.23.2/CMakeCCompiler.cmake CMakeFiles/3.23.2/CMakeCXXCompiler.cmake CMakeFiles/3.23.2/CMakeSystem.cmake: phony
+
+
+#############################################
+# Clean all the built files.
+
+build clean: CLEAN
+
+
+#############################################
+# Print all primary targets available.
+
+build help: HELP
+
+
+#############################################
+# Make the all target the default.
+
+default all
