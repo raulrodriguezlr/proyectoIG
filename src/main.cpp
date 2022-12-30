@@ -15,8 +15,16 @@ void drawVentilador(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawAspas(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawMesa(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawPata(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void drawChimenea(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void drawCuerpoChimenea(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void drawAlfombra(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void drawBalda(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+
+
 
 void controladorTiempo();
+
+
 
 void funFramebufferSize(GLFWwindow* window, int width, int height);
 void funKey            (GLFWwindow* window, int key  , int scancode, int action, int mods);
@@ -32,6 +40,7 @@ Model cube;
 Model cylinder;
 Model sphere;
 Model triangle;
+
 
 // Viewport
 int w = 1000;
@@ -140,9 +149,9 @@ void renderScene() {
     float x = 10.0f*glm::cos(glm::radians(alphaY))*glm::sin(glm::radians(alphaX));
     float y = 10.0f*glm::sin(glm::radians(alphaY));
     float z = 10.0f*glm::cos(glm::radians(alphaY))*glm::cos(glm::radians(alphaX));
-    glm::vec3 eye   (  x+desX,   y+desY,   z);
-    glm::vec3 center(0.0+desX, 3.0+desY,  0.0);
-    glm::vec3 up    (0.0, 3.0,  0.0);
+    glm::vec3 eye   (  x+desX,   y+desY,   z+desZ);
+    glm::vec3 center(0.0+desX, 4.0+desY,  0.0+desZ);
+    glm::vec3 up    (0.0, 1.0,  0.0);
     glm::mat4 V = glm::lookAt(eye, center, up);
 
     // Dibujamos el suelo
@@ -162,11 +171,18 @@ void renderScene() {
     drawVentilador(P, V, TVentilador*SVentilador);
     if(rotVentilador%2 == 0) controladorTiempo();
 
-    // Dibujamos mesa (Raúl)
+    // Dibujamos chimenea (Raúl)
+    glm::mat4 TChimenea = glm::translate(I, glm::vec3(0, 0, -9));
+    drawChimenea(P, V, TChimenea);
+    //Dibujamos balda(Raúl)
+    glm::mat4 TBalda = glm::translate(I, glm::vec3(8, 5, -10));
+    drawBalda(P,V,TBalda);
 
     // Dibujamos mesa (Iván)
     glm::mat4 TMesa = glm::translate(I, glm::vec3(-8, 0, -5));
     drawMesa(P, V, TMesa);
+    // Dibujamos alfombra(Raúl)
+    drawAlfombra(P,V,TMesa);
 
     // Dibujamos velas (Iván)
 
@@ -200,7 +216,51 @@ void drawParedes(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     drawObject(plane, glm::vec3(1.0, 0.0, 0.0), P, V, M*T4*S);
 
 }
+void drawChimenea(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+    //Conducto
+    glm::mat4 T1 = glm::translate(I, glm::vec3(0, 6.75, -0.65));
+    glm::mat4 S1 = glm::scale(I, glm::vec3(0.5, 3.25, 0.35));
+    glm::mat4 R1 =glm::rotate(I, glm::radians(90.0f), glm::vec3(1, 0, 0));
+    drawObject(cube, glm::vec3(1, 1, 1), P, V, M*T1*S1*R1);
+    //Cuerpo
+    glm::mat4 T2 = glm::translate(I, glm::vec3(0, 3.25, -0.5));
+    drawCuerpoChimenea(P,V,M*T2);
+}
+void drawCuerpoChimenea(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+    //PARTE DE ARRIBA
+    glm::mat4 S = glm::scale(I, glm::vec3(1.75, 0.25, 0.6));
+    glm::mat4 T = glm::translate(I, glm::vec3(0, 0, 0.1));
 
+    drawObject(cube, glm::vec3(0, 1, 0), P, V, M*T*S);
+    //PARTE DE ABAJO
+    glm::mat4 T1 = glm::translate(I, glm::vec3(0, -3, 0.5));
+    glm::mat4 S1 = glm::scale(I, glm::vec3(2.5, 0.25, 1));
+    drawObject(cube, glm::vec3(0, 1, 0), P, V, M*T1*S1);
+    //PARTE IZQUIERDA
+    glm::mat4 T2 = glm::translate(I, glm::vec3(-1.55, -1.25, 0.1));
+    glm::mat4 T3 = glm::translate(I, glm::vec3(1.55, -1.25, 0.1));
+    glm::mat4 S2 = glm::scale(I, glm::vec3(0.2, 1.5, 0.6));
+
+    drawObject(cube, glm::vec3(0, 1, 1), P, V, M*T2*S2);
+    drawObject(cube, glm::vec3(0, 1, 1), P, V, M*T3*S2);
+    //PARTE TRASERA
+    glm::mat4 T4 = glm::translate(I, glm::vec3(0, -1.75, -0.45));
+    glm::mat4 S4 = glm::scale(I, glm::vec3(1.75, 1.5, 0.05));
+    drawObject(cube, glm::vec3(1, 1, 1), P, V, M*T4*S4);
+}
+void drawAlfombra(glm::mat4 P, glm::mat4 V, glm::mat4 M){
+    glm::mat4 T = glm::translate(I, glm::vec3(1, 0, 0.5));
+    glm::mat4 S = glm::scale(I, glm::vec3(1.75*1.25, 0.01, 1*1.25));
+    drawObject(sphere, glm::vec3(1, 1, 1), P, V, M*T*S);
+}
+void drawBalda(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+    glm::mat4 S = glm::scale(I, glm::vec3(2, 0.15, 0.6));
+    glm::mat4 T = glm::translate(I, glm::vec3(0, 0, 0.6));
+    drawObject(cube, glm::vec3(1, 1, 1), P, V, M*T*S);
+    glm::mat4 S1 = glm::scale(I, glm::vec3(3, 0.15, 0.6));
+    glm::mat4 T1 = glm::translate(I, glm::vec3(-1, -2, 0.6));
+    drawObject(cube, glm::vec3(1, 1, 1), P, V, M*T1*S1);
+}
 void drawSofa(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
     // Asiento
@@ -323,13 +383,15 @@ void funFramebufferSize(GLFWwindow* window, int width, int height) {
 void funKey(GLFWwindow* window, int key  , int scancode, int action, int mods) {
 
     switch(key) {
-        case GLFW_KEY_UP:    desY += 1.0f;   break;
-        case GLFW_KEY_DOWN:  desY -= 1.0f;   break;
-        case GLFW_KEY_LEFT:  desX -= 1.0f;   break;
-        case GLFW_KEY_RIGHT: desX += 1.0f;   break;
+        case GLFW_KEY_UP:    desY += 0.5f;   break;
+        case GLFW_KEY_DOWN:  desY -= 0.5f;   break;
+        case GLFW_KEY_LEFT:  desX -= 0.5f;   break;
+        case GLFW_KEY_RIGHT: desX += 0.5f;   break;
+        case GLFW_KEY_LEFT_SHIFT:    break;
+
         case GLFW_KEY_Z:
-            if(mods==GLFW_MOD_SHIFT) desZ -= desZ > -24.0f ? 0.1f : 0.0f;
-            else                     desZ += desZ <   5.0f ? 0.1f : 0.0f;
+            if(mods==GLFW_MOD_SHIFT)  desZ += desZ <   7.0f ? 0.5f : 0.0f;
+            else                     desZ -= desZ > -10.0f ? 0.5f : 0.0f;
             break;
         case GLFW_KEY_V:
             if(action==GLFW_PRESS)
@@ -337,6 +399,9 @@ void funKey(GLFWwindow* window, int key  , int scancode, int action, int mods) {
             break;
         default:
             desY = 0.0f;
+            desX = 0.0f;
+            desZ = 0.0f;
+
             rotY = 0.0f;
             break;
     }

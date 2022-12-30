@@ -1,0 +1,225 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "binary/proyectoFinal"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable",
+			"link_directories",
+			"target_link_libraries",
+			"include_directories"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 19,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 13,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 21,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 12,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=13.0"
+				},
+				{
+					"fragment" : "-std=gnu++14"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 4,
+					"path" : "/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/src"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glew/include"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glfw/include"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glm/include"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/assimp/include"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/freeimage/include"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "14"
+			},
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2
+			]
+		}
+	],
+	"id" : "proyectoFinal::@6890427a1f51a3e7e1df",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-g",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "-L/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glew/lib",
+				"role" : "libraryPath"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "-L/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glfw/lib",
+				"role" : "libraryPath"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "-L/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glm/lib",
+				"role" : "libraryPath"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "-L/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/assimp/lib",
+				"role" : "libraryPath"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "-L/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/freeimage/lib",
+				"role" : "libraryPath"
+			},
+			{
+				"fragment" : "-Wl,-rpath,/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glew/lib -Wl,-rpath,/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glfw/lib -Wl,-rpath,/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glm/lib -Wl,-rpath,/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/assimp/lib -Wl,-rpath,/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/freeimage/lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-lopengl32",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-lglu32",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-lglew32",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-lglfw3",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-lassimp",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-lfreeimage",
+				"role" : "libraries"
+			}
+		],
+		"language" : "CXX"
+	},
+	"name" : "proyectoFinal",
+	"nameOnDisk" : "proyectoFinal",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/Model.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/Shaders.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/main.cpp",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "EXECUTABLE"
+}
