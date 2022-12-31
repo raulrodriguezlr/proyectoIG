@@ -17,6 +17,8 @@ void drawMesa(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawPata(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawChimenea(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawCuerpoChimenea(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void drawTroncos(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+
 void drawAlfombra(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawBalda(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 
@@ -40,6 +42,7 @@ Model cube;
 Model cylinder;
 Model sphere;
 Model triangle;
+Model tronco;
 
 
 // Viewport
@@ -127,6 +130,7 @@ void configScene() {
     cylinder.initModel("resources/models/cylinder.obj");
     sphere.initModel("resources/models/sphere.obj");
     triangle.initModel("resources/models/triangle.obj");
+    tronco.initModel("resources/models/wooden.OBJ");
 
 }
 
@@ -246,7 +250,22 @@ void drawCuerpoChimenea(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     //PARTE TRASERA
     glm::mat4 T4 = glm::translate(I, glm::vec3(0, -1.75, -0.45));
     glm::mat4 S4 = glm::scale(I, glm::vec3(1.75, 1.5, 0.05));
-    drawObject(cube, glm::vec3(1, 1, 1), P, V, M*T4*S4);
+    drawObject(cube, glm::vec3(0, 0, 0), P, V, M*T4*S4);
+    drawTroncos(P,V,M*T1*S1);
+}
+void drawTroncos(glm::mat4 P, glm::mat4 V, glm::mat4 M){
+    glm::mat4 T1 = glm::translate(I, glm::vec3(0.25, 1.5, 0));
+    glm::mat4 T2 = glm::translate(I, glm::vec3(0.25, 1.5, -0.5));
+    glm::mat4 T3 = glm::translate(I, glm::vec3(0.25, 2.4, -0.25));
+
+    glm::mat4 S = glm::scale(I, glm::vec3(2, 0.5, 1));
+    glm::mat4 R1 =glm::rotate(I, glm::radians(90.0f), glm::vec3(0, 0, 1));
+
+    drawObject(tronco, glm::vec3(1, 0, 1), P, V, M*T1*R1*S);
+    drawObject(tronco, glm::vec3(1, 1, 0.5), P, V, M*T2*R1*S);
+    drawObject(tronco, glm::vec3(1, 0.5, 1), P, V, M*T3*R1*S);
+
+
 }
 void drawAlfombra(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 T = glm::translate(I, glm::vec3(1, 0, 0.5));

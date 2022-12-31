@@ -1,10 +1,10 @@
 # ninja log v5
 1	64	0	/Users/raulrodriguezlopez-rey/Desktop/IG/sesion5/cmake-build-debug/CMakeFiles/cmake.verify_globs	698baf8c35db66b8
-15	3024	1672357133685764059	CMakeFiles/proyectoIG.dir/src/Shaders.cpp.o	6fd9ebf8d75d462b
-7	2104	1672362622812609453	CMakeFiles/proyectoIG.dir/src/main.cpp.o	f6b1198113cb0d5
+0	2305	1672362881618168126	CMakeFiles/proyectoIG.dir/src/Shaders.cpp.o	6fd9ebf8d75d462b
+5	4479	1672449604945787482	CMakeFiles/proyectoIG.dir/src/main.cpp.o	f6b1198113cb0d5
 2	48	0	/Users/raulrodriguezlopez-rey/Desktop/IG/Practica1/cmake-build-debug/CMakeFiles/cmake.verify_globs	dbf315cc5e48ad8e
-1	31	0	/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/cmake-build-debug/CMakeFiles/cmake.verify_globs	bcaf69a46e5193c
+0	50	0	/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/cmake-build-debug/CMakeFiles/cmake.verify_globs	bcaf69a46e5193c
 1	24	0	/Users/raulrodriguezlopez-rey/Desktop/IG/sesion4/cmake-build-debug/CMakeFiles/cmake.verify_globs	4f59ef14433a3223
 1	33	0	/Users/raulrodriguezlopez-rey/Desktop/IG/proyectoFinal/cmake-build-debug/CMakeFiles/cmake.verify_globs	7726bcf18f5a3721
-2105	2234	1672362622951887136	binary/proyectoIG	543b718792b0a5f4
-14	3089	1672357133728732642	CMakeFiles/proyectoIG.dir/src/Model.cpp.o	66a78bfa3bfc1e71
+4479	4623	1672449605101412796	binary/proyectoIG	543b718792b0a5f4
+0	2350	1672362881658528198	CMakeFiles/proyectoIG.dir/src/Model.cpp.o	66a78bfa3bfc1e71
