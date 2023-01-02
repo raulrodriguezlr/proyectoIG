@@ -18,15 +18,13 @@ void drawPata(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawChimenea(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawCuerpoChimenea(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawTroncos(glm::mat4 P, glm::mat4 V, glm::mat4 M);
-
 void drawAlfombra(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawBalda(glm::mat4 P, glm::mat4 V, glm::mat4 M);
-
-
+void drawVela(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void drawMueble(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void drawVentana(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 
 void controladorTiempo();
-
-
 
 void funFramebufferSize(GLFWwindow* window, int width, int height);
 void funKey            (GLFWwindow* window, int key  , int scancode, int action, int mods);
@@ -43,6 +41,8 @@ Model cylinder;
 Model sphere;
 Model triangle;
 Model tronco;
+Model vela;
+Model mueble;
 
 
 // Viewport
@@ -130,7 +130,9 @@ void configScene() {
     cylinder.initModel("resources/models/cylinder.obj");
     sphere.initModel("resources/models/sphere.obj");
     triangle.initModel("resources/models/triangle.obj");
-    tronco.initModel("resources/models/wooden.OBJ");
+    tronco.initModel("resources/models/wooden.obj");
+    vela.initModel("resources/models/vela_1.obj");
+    mueble.initModel("resources/models/bookshelf.obj");
 
 }
 
@@ -178,6 +180,7 @@ void renderScene() {
     // Dibujamos chimenea (Raúl)
     glm::mat4 TChimenea = glm::translate(I, glm::vec3(0, 0, -9));
     drawChimenea(P, V, TChimenea);
+
     //Dibujamos balda(Raúl)
     glm::mat4 TBalda = glm::translate(I, glm::vec3(8, 5, -10));
     drawBalda(P,V,TBalda);
@@ -185,10 +188,20 @@ void renderScene() {
     // Dibujamos mesa (Iván)
     glm::mat4 TMesa = glm::translate(I, glm::vec3(-8, 0, -5));
     drawMesa(P, V, TMesa);
+
     // Dibujamos alfombra(Raúl)
     drawAlfombra(P,V,TMesa);
 
     // Dibujamos velas (Iván)
+    glm::mat4 TVela = glm::translate(I, glm::vec3(8, 5.1, -10));
+    drawVela(P, V, TVela);
+
+    // Dibujamos mueble con libros (Iván)
+    glm::mat4 TMueble = glm::translate(I, glm::vec3(9.1, 0, 0));
+    drawMueble(P, V, TMueble);
+
+    // Dibujamos ventana con cortinas (Iván)
+    drawVentana(P, V, I);
 
 }
 
@@ -221,25 +234,30 @@ void drawParedes(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
 }
 void drawChimenea(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+
     //Conducto
     glm::mat4 T1 = glm::translate(I, glm::vec3(0, 6.75, -0.65));
     glm::mat4 S1 = glm::scale(I, glm::vec3(0.5, 3.25, 0.35));
     glm::mat4 R1 =glm::rotate(I, glm::radians(90.0f), glm::vec3(1, 0, 0));
     drawObject(cube, glm::vec3(1, 1, 1), P, V, M*T1*S1*R1);
+
     //Cuerpo
     glm::mat4 T2 = glm::translate(I, glm::vec3(0, 3.25, -0.5));
     drawCuerpoChimenea(P,V,M*T2);
 }
 void drawCuerpoChimenea(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+
     //PARTE DE ARRIBA
     glm::mat4 S = glm::scale(I, glm::vec3(1.75, 0.25, 0.6));
     glm::mat4 T = glm::translate(I, glm::vec3(0, 0, 0.1));
 
     drawObject(cube, glm::vec3(0, 1, 0), P, V, M*T*S);
+
     //PARTE DE ABAJO
     glm::mat4 T1 = glm::translate(I, glm::vec3(0, -3, 0.5));
     glm::mat4 S1 = glm::scale(I, glm::vec3(2.5, 0.25, 1));
     drawObject(cube, glm::vec3(0, 1, 0), P, V, M*T1*S1);
+
     //PARTE IZQUIERDA
     glm::mat4 T2 = glm::translate(I, glm::vec3(-1.55, -1.25, 0.1));
     glm::mat4 T3 = glm::translate(I, glm::vec3(1.55, -1.25, 0.1));
@@ -247,13 +265,16 @@ void drawCuerpoChimenea(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
     drawObject(cube, glm::vec3(0, 1, 1), P, V, M*T2*S2);
     drawObject(cube, glm::vec3(0, 1, 1), P, V, M*T3*S2);
+
     //PARTE TRASERA
     glm::mat4 T4 = glm::translate(I, glm::vec3(0, -1.75, -0.45));
     glm::mat4 S4 = glm::scale(I, glm::vec3(1.75, 1.5, 0.05));
     drawObject(cube, glm::vec3(0, 0, 0), P, V, M*T4*S4);
     drawTroncos(P,V,M*T1*S1);
+
 }
 void drawTroncos(glm::mat4 P, glm::mat4 V, glm::mat4 M){
+
     glm::mat4 T1 = glm::translate(I, glm::vec3(0.25, 1.5, 0));
     glm::mat4 T2 = glm::translate(I, glm::vec3(0.25, 1.5, -0.5));
     glm::mat4 T3 = glm::translate(I, glm::vec3(0.25, 2.4, -0.25));
@@ -268,17 +289,21 @@ void drawTroncos(glm::mat4 P, glm::mat4 V, glm::mat4 M){
 
 }
 void drawAlfombra(glm::mat4 P, glm::mat4 V, glm::mat4 M){
+
     glm::mat4 T = glm::translate(I, glm::vec3(1, 0, 0.5));
     glm::mat4 S = glm::scale(I, glm::vec3(1.75*1.25, 0.01, 1*1.25));
     drawObject(sphere, glm::vec3(1, 1, 1), P, V, M*T*S);
+
 }
 void drawBalda(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+
     glm::mat4 S = glm::scale(I, glm::vec3(2, 0.15, 0.6));
     glm::mat4 T = glm::translate(I, glm::vec3(0, 0, 0.6));
     drawObject(cube, glm::vec3(1, 1, 1), P, V, M*T*S);
     glm::mat4 S1 = glm::scale(I, glm::vec3(3, 0.15, 0.6));
     glm::mat4 T1 = glm::translate(I, glm::vec3(-1, -2, 0.6));
     drawObject(cube, glm::vec3(1, 1, 1), P, V, M*T1*S1);
+
 }
 void drawSofa(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
@@ -371,6 +396,33 @@ void drawPata(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     glm::mat4 S = glm::scale(I, glm::vec3(0.10, 0.6, 0.10));
     glm::mat4 T = glm::translate(I, glm::vec3(0, 0.6, 0));
     drawObject(cube, glm::vec3(0.139, 0.069, 0.019), P, V, M*T*S);
+
+}
+
+void drawVela(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+
+    glm::mat4 S = glm::scale(I, glm::vec3(2, 2, 2));
+    drawObject(vela, glm::vec3(0, 0, 0), P, V, M*S);
+
+}
+
+void drawMueble(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+
+    glm::mat4 S = glm::scale(I, glm::vec3(0.5, 0.5, 0.5));
+    glm::mat4 Ry =glm::rotate(I, glm::radians(180.0f), glm::vec3(0, 1, 0));
+    glm::mat4 T = glm::translate(I, glm::vec3(0, 1.3, 0));
+    drawObject(mueble, glm::vec3(0, 0, 0), P, V, M*T*Ry*S);
+
+}
+
+void drawVentana(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+
+    glm::mat4 S = glm::scale(I, glm::vec3(0.1, 1.2, 0.1));
+    glm::mat4 T1 = glm::translate(I, glm::vec3(0, 1, 0));
+    drawObject(cube, glm::vec3(0, 0, 0), P, V, M*T1*S);
+
+    glm::mat4 Rz =glm::rotate(I, glm::radians(90.0f), glm::vec3(0, 0, 1));
+    drawObject(cube, glm::vec3(0, 0, 0), P, V, M*T1*Rz*S);
 
 }
 
