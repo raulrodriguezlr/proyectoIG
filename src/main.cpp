@@ -3,10 +3,13 @@
 #include <GLFW/glfw3.h>
 #include "Shaders.h"
 #include "Model.h"
+#include "Texture.h"
 
 void configScene();
 void renderScene();
-void drawObject(Model &model, glm::vec3 color, glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void setLights(glm::mat4 P, glm::mat4 V);
+void drawObjectMat(Model &model, Material material, glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void drawObjectTex(Model &model, Textures textures, glm::mat4 P, glm::mat4 V, glm::mat4 M);
 
 void drawSuelo (glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawParedes (glm::mat4 P, glm::mat4 V, glm::mat4 M);
@@ -45,6 +48,23 @@ Model vela;
 Model mueble;
 Model cortinas;
 
+// Imagenes (texturas)
+Texture suelo;
+Texture paredes;
+Texture paredesVert;
+
+// Luces y materiales
+#define   NLD 1
+#define   NLP 1
+#define   NLF 2
+Light     lightG;
+Light     lightD[NLD];
+Light     lightP[NLP];
+Light     lightF[NLF];
+Material  mluz;
+Textures texSuelo;
+Textures texParedes;
+Textures texParedesVert;
 
 // Viewport
 int w = 1000;
@@ -120,7 +140,6 @@ void configScene() {
 
     // Test de profundidad
     glEnable(GL_DEPTH_TEST);
-    glPolygonOffset(1.0,1.0);
 
     // Shaders
     shaders.initShaders("resources/shaders/vshader.glsl","resources/shaders/fshader.glsl");
@@ -135,6 +154,76 @@ void configScene() {
     vela.initModel("resources/models/vela_1.obj");
     mueble.initModel("resources/models/bookshelf.obj");
     cortinas.initModel("resources/models/cortinas.obj");
+
+    // Imagenes (texturas)
+    suelo.initTexture("resources/textures/suelo.jpg");
+    paredes.initTexture("resources/textures/paredes.jpg");
+    paredesVert.initTexture("resources/textures/paredes_vertical.jpg");
+
+    // Luz ambiental global
+    lightG.ambient = glm::vec3(0.5, 0.5, 0.5);
+
+    // Luces direccionales
+    lightD[0].direction = glm::vec3(-1.0, 0.0, 0.0);
+    lightD[0].ambient   = glm::vec3( 0.1, 0.1, 0.1);
+    lightD[0].diffuse   = glm::vec3( 0.7, 0.7, 0.7);
+    lightD[0].specular  = glm::vec3( 0.7, 0.7, 0.7);
+
+    // Luces posicionales
+    lightP[0].position    = glm::vec3(0.0, 3.0, 3.0);
+    lightP[0].ambient     = glm::vec3(0.2, 0.2, 0.2);
+    lightP[0].diffuse     = glm::vec3(0.9, 0.9, 0.9);
+    lightP[0].specular    = glm::vec3(0.9, 0.9, 0.9);
+    lightP[0].c0          = 1.00;
+    lightP[0].c1          = 0.22;
+    lightP[0].c2          = 0.20;
+
+    // Luces focales
+    lightF[0].position    = glm::vec3(-2.0,  2.0,  5.0);
+    lightF[0].direction   = glm::vec3( 2.0, -2.0, -5.0);
+    lightF[0].ambient     = glm::vec3( 0.2,  0.2,  0.2);
+    lightF[0].diffuse     = glm::vec3( 0.9,  0.9,  0.9);
+    lightF[0].specular    = glm::vec3( 0.9,  0.9,  0.9);
+    lightF[0].innerCutOff = 10.0;
+    lightF[0].outerCutOff = lightF[0].innerCutOff + 5.0;
+    lightF[0].c0          = 1.000;
+    lightF[0].c1          = 0.090;
+    lightF[0].c2          = 0.032;
+    lightF[1].position    = glm::vec3( 2.0,  2.0,  5.0);
+    lightF[1].direction   = glm::vec3(-2.0, -2.0, -5.0);
+    lightF[1].ambient     = glm::vec3( 0.2,  0.2,  0.2);
+    lightF[1].diffuse     = glm::vec3( 0.9,  0.9,  0.9);
+    lightF[1].specular    = glm::vec3( 0.9,  0.9,  0.9);
+    lightF[1].innerCutOff = 5.0;
+    lightF[1].outerCutOff = lightF[1].innerCutOff + 1.0;
+    lightF[1].c0          = 1.000;
+    lightF[1].c1          = 0.090;
+    lightF[1].c2          = 0.032;
+
+    // Materiales
+    mluz.ambient   = glm::vec4(0.0, 0.0, 0.0, 1.0);
+    mluz.diffuse   = glm::vec4(0.0, 0.0, 0.0, 1.0);
+    mluz.specular  = glm::vec4(0.0, 0.0, 0.0, 1.0);
+    mluz.emissive  = glm::vec4(1.0, 1.0, 1.0, 1.0);
+    mluz.shininess = 1.0;
+
+    texSuelo.diffuse   = suelo.getTexture();
+    texSuelo.specular  = suelo.getTexture();
+    texSuelo.emissive  = suelo.getTexture();
+    texSuelo.normal    = 0;
+    texSuelo.shininess = 10.0;
+
+    texParedes.diffuse   = paredes.getTexture();
+    texParedes.specular  = paredes.getTexture();
+    texParedes.emissive  = paredes.getTexture();
+    texParedes.normal    = 0;
+    texParedes.shininess = 10.0;
+
+    texParedesVert.diffuse   = paredes.getTexture();
+    texParedesVert.specular  = paredes.getTexture();
+    texParedesVert.emissive  = paredes.getTexture();
+    texParedesVert.normal    = 0;
+    texParedesVert.shininess = 10.0;
 
 }
 
@@ -161,6 +250,10 @@ void renderScene() {
     glm::vec3 center(0.0+desX, 4.0+desY,  0.0+desZ);
     glm::vec3 up    (0.0, 1.0,  0.0);
     glm::mat4 V = glm::lookAt(eye, center, up);
+    shaders.setVec3("ueye",eye);
+
+    // Fijamos las luces
+    setLights(P, V);
 
     // Dibujamos el suelo
     drawSuelo(P, V, I);
@@ -210,10 +303,29 @@ void renderScene() {
 
 }
 
+void setLights(glm::mat4 P, glm::mat4 V) {
+
+    shaders.setLight("ulightG",lightG);
+    for(int i=0; i<NLD; i++) shaders.setLight("ulightD["+toString(i)+"]",lightD[i]);
+    for(int i=0; i<NLP; i++) shaders.setLight("ulightP["+toString(i)+"]",lightP[i]);
+    for(int i=0; i<NLF; i++) shaders.setLight("ulightF["+toString(i)+"]",lightF[i]);
+
+    for(int i=0; i<NLP; i++) {
+        glm::mat4 M = glm::translate(I,lightP[i].position) * glm::scale(I,glm::vec3(0.1));
+        drawObjectMat(sphere, mluz, P, V, M);
+    }
+
+    for(int i=0; i<NLF; i++) {
+        glm::mat4 M = glm::translate(I,lightF[i].position) * glm::scale(I,glm::vec3(0.025));
+        drawObjectMat(sphere, mluz, P, V, M);
+    }
+
+}
+
 void drawSuelo(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
     glm::mat4 S = glm::scale(I, glm::vec3(10.0, 1.0, 10.0));
-    drawObject(plane, glm::vec3(0.0, 0.0, 1.0), P, V, M*S);
+    drawObjectTex(plane, texSuelo, P, V, M*S);
 
 }
 
@@ -222,33 +334,33 @@ void drawParedes(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     glm::mat4 S3 = glm::scale(I, glm::vec3(5.0, 1.0, 3.5));
     glm::mat4 Rz90 = glm::rotate(I, glm::radians(90.0f), glm::vec3(0, 0, 1));
     glm::mat4 T1 = glm::translate(I, glm::vec3(-10, 5, 6.5));
-    drawObject(plane, glm::vec3(1.0, 0.0, 0.0), P, V, M*T1*Rz90*S3);
+    drawObjectTex(plane, texParedes, P, V, M*T1*Rz90*S3);
 
     glm::mat4 S4 = glm::scale(I, glm::vec3(5.0, 1.0, 4.8));
     glm::mat4 T5 = glm::translate(I, glm::vec3(-10, 5, -5.2));
-    drawObject(plane, glm::vec3(1.0, 0.0, 0.0), P, V, M*T5*Rz90*S4);
+    drawObjectTex(plane, texParedes, P, V, M*T5*Rz90*S4);
 
     glm::mat4 S5 = glm::scale(I, glm::vec3(2.2, 1.0, 1.8));
     glm::mat4 T6 = glm::translate(I, glm::vec3(-10, 7.8, 1.2));
-    drawObject(plane, glm::vec3(1.0, 0.0, 0.0), P, V, M*T6*Rz90*S5);
+    drawObjectTex(plane, texParedes, P, V, M*T6*Rz90*S5);
 
     glm::mat4 S6 = glm::scale(I, glm::vec3(1.1, 1.0, 1.8));
     glm::mat4 T7 = glm::translate(I, glm::vec3(-10, 1.1, 1.2));
-    drawObject(plane, glm::vec3(1.0, 0.0, 0.0), P, V, M*T7*Rz90*S6);
+    drawObjectTex(plane, texParedes, P, V, M*T7*Rz90*S6);
 
-    glm::mat4 S2 = glm::scale(I, glm::vec3(10.0, 1.0, 5.0));
+    glm::mat4 S2 = glm::scale(I, glm::vec3(5.0, 8.0, 10.0));
     glm::mat4 Rx90 = glm::rotate(I, glm::radians(90.0f), glm::vec3(1, 0, 0));
     glm::mat4 T2 = glm::translate(I, glm::vec3(0, 5, -10));
-    drawObject(plane, glm::vec3(1.0, 0.0, 0.0), P, V, M*T2*Rx90*S2);
+    drawObjectTex(plane, texParedes, P, V, M*T2*Rz90*Rx90*S2);
 
     glm::mat4 S1 = glm::scale(I, glm::vec3(5.0, 1.0, 10.0));
     glm::mat4 T3 = glm::translate(I, glm::vec3(10, 5, 0));
-    drawObject(plane, glm::vec3(1.0, 0.0, 0.0), P, V, M*T3*Rz90*S1);
+    drawObjectTex(plane, texParedes, P, V, M*T3*Rz90*S1);
 
     // Techo
     glm::mat4 S = glm::scale(I, glm::vec3(10.0, 1.0, 10.0));
     glm::mat4 T4 = glm::translate(I, glm::vec3(0, 10, 0));
-    drawObject(plane, glm::vec3(1.0, 0.0, 0.0), P, V, M*T4*S);
+    //drawObject(plane, glm::vec3(1.0, 0.0, 0.0), P, V, M*T4*S);
 
 }
 void drawChimenea(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
@@ -257,7 +369,7 @@ void drawChimenea(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     glm::mat4 T1 = glm::translate(I, glm::vec3(0, 6.75, -0.65));
     glm::mat4 S1 = glm::scale(I, glm::vec3(0.5, 3.25, 0.35));
     glm::mat4 R1 =glm::rotate(I, glm::radians(90.0f), glm::vec3(1, 0, 0));
-    drawObject(cube, glm::vec3(1, 1, 1), P, V, M*T1*S1*R1);
+    //drawObject(cube, glm::vec3(1, 1, 1), P, V, M*T1*S1*R1);
 
     //Cuerpo
     glm::mat4 T2 = glm::translate(I, glm::vec3(0, 3.25, -0.5));
@@ -269,25 +381,25 @@ void drawCuerpoChimenea(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     glm::mat4 S = glm::scale(I, glm::vec3(1.75, 0.25, 0.6));
     glm::mat4 T = glm::translate(I, glm::vec3(0, 0, 0.1));
 
-    drawObject(cube, glm::vec3(0, 1, 0), P, V, M*T*S);
+    //drawObject(cube, glm::vec3(0, 1, 0), P, V, M*T*S);
 
     //PARTE DE ABAJO
     glm::mat4 T1 = glm::translate(I, glm::vec3(0, -3, 0.5));
     glm::mat4 S1 = glm::scale(I, glm::vec3(2.5, 0.25, 1));
-    drawObject(cube, glm::vec3(0, 1, 0), P, V, M*T1*S1);
+    //drawObject(cube, glm::vec3(0, 1, 0), P, V, M*T1*S1);
 
     //PARTE IZQUIERDA
     glm::mat4 T2 = glm::translate(I, glm::vec3(-1.55, -1.25, 0.1));
     glm::mat4 T3 = glm::translate(I, glm::vec3(1.55, -1.25, 0.1));
     glm::mat4 S2 = glm::scale(I, glm::vec3(0.2, 1.5, 0.6));
 
-    drawObject(cube, glm::vec3(0, 1, 1), P, V, M*T2*S2);
-    drawObject(cube, glm::vec3(0, 1, 1), P, V, M*T3*S2);
+    //drawObject(cube, glm::vec3(0, 1, 1), P, V, M*T2*S2);
+    //drawObject(cube, glm::vec3(0, 1, 1), P, V, M*T3*S2);
 
     //PARTE TRASERA
     glm::mat4 T4 = glm::translate(I, glm::vec3(0, -1.75, -0.45));
     glm::mat4 S4 = glm::scale(I, glm::vec3(1.75, 1.5, 0.05));
-    drawObject(cube, glm::vec3(0, 0, 0), P, V, M*T4*S4);
+    //drawObject(cube, glm::vec3(0, 0, 0), P, V, M*T4*S4);
     drawTroncos(P,V,M*T1*S1);
 
 }
@@ -300,9 +412,9 @@ void drawTroncos(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 S = glm::scale(I, glm::vec3(2, 0.5, 1));
     glm::mat4 R1 =glm::rotate(I, glm::radians(90.0f), glm::vec3(0, 0, 1));
 
-    drawObject(tronco, glm::vec3(1, 0, 1), P, V, M*T1*R1*S);
-    drawObject(tronco, glm::vec3(1, 1, 0.5), P, V, M*T2*R1*S);
-    drawObject(tronco, glm::vec3(1, 0.5, 1), P, V, M*T3*R1*S);
+    //drawObject(tronco, glm::vec3(1, 0, 1), P, V, M*T1*R1*S);
+    //drawObject(tronco, glm::vec3(1, 1, 0.5), P, V, M*T2*R1*S);
+    //drawObject(tronco, glm::vec3(1, 0.5, 1), P, V, M*T3*R1*S);
 
 
 }
@@ -310,17 +422,17 @@ void drawAlfombra(glm::mat4 P, glm::mat4 V, glm::mat4 M){
 
     glm::mat4 T = glm::translate(I, glm::vec3(1, 0, 0.5));
     glm::mat4 S = glm::scale(I, glm::vec3(1.75*1.25, 0.01, 1*1.25));
-    drawObject(sphere, glm::vec3(1, 1, 1), P, V, M*T*S);
+    //drawObject(sphere, glm::vec3(1, 1, 1), P, V, M*T*S);
 
 }
 void drawBalda(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
     glm::mat4 S = glm::scale(I, glm::vec3(2, 0.15, 0.6));
     glm::mat4 T = glm::translate(I, glm::vec3(0, 0, 0.6));
-    drawObject(cube, glm::vec3(1, 1, 1), P, V, M*T*S);
+    //drawObject(cube, glm::vec3(1, 1, 1), P, V, M*T*S);
     glm::mat4 S1 = glm::scale(I, glm::vec3(3, 0.15, 0.6));
     glm::mat4 T1 = glm::translate(I, glm::vec3(-1, -2, 0.6));
-    drawObject(cube, glm::vec3(1, 1, 1), P, V, M*T1*S1);
+    //drawObject(cube, glm::vec3(1, 1, 1), P, V, M*T1*S1);
 
 }
 void drawSofa(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
@@ -328,25 +440,25 @@ void drawSofa(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     // Asiento
     glm::mat4 S = glm::scale(I, glm::vec3(1.5, 0.25, 1.0));
     glm::mat4 T = glm::translate(I, glm::vec3(0, 0.75, 0));
-    drawObject(cube, glm::vec3(0.0, 1.0, 0.0), P, V, M*T*S);
+    //drawObject(cube, glm::vec3(0.0, 1.0, 0.0), P, V, M*T*S);
 
     // Reposabrazos
     glm::mat4 S1 = glm::scale(I, glm::vec3(0.25, 0.75, 0.75));
     glm::mat4 T1 = glm::translate(I, glm::vec3(-1.25, 0.75, 0.25));
-    drawObject(cube, glm::vec3(0.139, 0.069, 0.019), P, V, M*T1*S1);
+    //drawObject(cube, glm::vec3(0.139, 0.069, 0.019), P, V, M*T1*S1);
 
     glm::mat4 T2 = glm::translate(I, glm::vec3(1.25, 0.75, 0.25));
-    drawObject(cube, glm::vec3(0.139, 0.069, 0.019), P, V, M*T2*S1);
+    //drawObject(cube, glm::vec3(0.139, 0.069, 0.019), P, V, M*T2*S1);
 
     // Respaldo
     glm::mat4 Rx90 = glm::rotate(I, glm::radians(90.0f), glm::vec3(1, 0, 0));
     glm::mat4 T3 = glm::translate(I, glm::vec3(0, 1, -0.75));
-    drawObject(cube, glm::vec3(0.0, 1.0, 0.0), P, V, M*T3*Rx90*S);
+    //drawObject(cube, glm::vec3(0.0, 1.0, 0.0), P, V, M*T3*Rx90*S);
 
     // Parte delantera
     glm::mat4 S2 = glm::scale(I, glm::vec3(1, 0.25, 0.25));
     glm::mat4 T4 = glm::translate(I, glm::vec3(0, 0.25, 0.75));
-    drawObject(cube, glm::vec3(0.139, 0.069, 0.019), P, V, M*T4*S2);
+    //drawObject(cube, glm::vec3(0.139, 0.069, 0.019), P, V, M*T4*S2);
 
 }
 
@@ -355,21 +467,21 @@ void drawVentilador(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     // Cuerpo (Cilindro)
     glm::mat4 SCuerpo = glm::scale(I, glm::vec3(0.25, 0.12, 0.25));
     glm::mat4 TCuerpo = glm::translate(I, glm::vec3(0, 1, 0));
-    drawObject(cylinder, glm::vec3(0.6, 0.6, 0.6), P, V, M*TCuerpo*SCuerpo);
+    //drawObject(cylinder, glm::vec3(0.6, 0.6, 0.6), P, V, M*TCuerpo*SCuerpo);
 
     // Plafón (Esfera)
     glm::mat4 SPlafon = glm::scale(I, glm::vec3(0.25, 0.12, 0.25));
     glm::mat4 TPlafon = glm::translate(I, glm::vec3(0, 0.85, 0));
-    drawObject(sphere, glm::vec3(0.9, 0.9, 0.9), P, V, M*TPlafon*SPlafon);
+    //drawObject(sphere, glm::vec3(0.9, 0.9, 0.9), P, V, M*TPlafon*SPlafon);
 
     // Sorporte Techo (Cilindro)
     glm::mat4 SSoporte = glm::scale(I, glm::vec3(0.05, 0.25, 0.05));
     glm::mat4 TSoporte = glm::translate(I, glm::vec3(0, 1.2, 0));
-    drawObject(cylinder, glm::vec3(0.139, 0.069, 0.019), P, V, M*TSoporte*SSoporte);
+    //drawObject(cylinder, glm::vec3(0.139, 0.069, 0.019), P, V, M*TSoporte*SSoporte);
 
     // Aspas (Triangulo)
     glm::mat4 RotTiempo = glm::rotate(I, glm::radians(RTiempo), glm::vec3(0, 1, 0));
-    drawAspas(P, V, M*RotTiempo);
+    //drawAspas(P, V, M*RotTiempo);
 
 }
 
@@ -379,15 +491,15 @@ void drawAspas(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     glm::mat4 SAspa1 = glm::scale(I, glm::vec3(0.15, 0.5, 1));
     glm::mat4 TAspa1 = glm::translate(I, glm::vec3(0, 1, 0.65));
     glm::mat4 Rx90 = glm::rotate(I, glm::radians(-90.0f), glm::vec3(1, 0, 0));
-    drawObject(triangle, glm::vec3(0.139, 0.069, 0.019), P, V, M*TAspa1*Rx90*SAspa1);
+    //drawObject(triangle, glm::vec3(0.139, 0.069, 0.019), P, V, M*TAspa1*Rx90*SAspa1);
 
     glm::mat4 TAspa2 = glm::translate(I, glm::vec3(-0.55, 1, -0.3));
     glm::mat4 Ry90Neg = glm::rotate(I, glm::radians(-120.0f), glm::vec3(0, 1, 0));
-    drawObject(triangle, glm::vec3(0.139, 0.069, 0.019), P, V, M*TAspa2*Ry90Neg*Rx90*SAspa1);
+    //drawObject(triangle, glm::vec3(0.139, 0.069, 0.019), P, V, M*TAspa2*Ry90Neg*Rx90*SAspa1);
 
     glm::mat4 TAspa3 = glm::translate(I, glm::vec3(0.55, 1, -0.3));
     glm::mat4 Ry90Pos = glm::rotate(I, glm::radians(120.0f), glm::vec3(0, 1, 0));
-    drawObject(triangle, glm::vec3(0.139, 0.069, 0.019), P, V, M*TAspa3*Ry90Pos*Rx90*SAspa1);
+    //drawObject(triangle, glm::vec3(0.139, 0.069, 0.019), P, V, M*TAspa3*Ry90Pos*Rx90*SAspa1);
 
 }
 
@@ -405,7 +517,7 @@ void drawMesa(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     // Tablero
     glm::mat4 STablero = glm::scale(I, glm::vec3(1.5, 0.1, 0.7));
     glm::mat4 TTablero = glm::translate(I, glm::vec3(0.95, 1.15, 0.5));
-    drawObject(cube, glm::vec3(0.139, 0.069, 0.019), P, V, M*TTablero*STablero);
+    //drawObject(cube, glm::vec3(0.139, 0.069, 0.019), P, V, M*TTablero*STablero);
 
 }
 
@@ -413,14 +525,14 @@ void drawPata(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
     glm::mat4 S = glm::scale(I, glm::vec3(0.10, 0.6, 0.10));
     glm::mat4 T = glm::translate(I, glm::vec3(0, 0.6, 0));
-    drawObject(cube, glm::vec3(0.139, 0.069, 0.019), P, V, M*T*S);
+    //drawObject(cube, glm::vec3(0.139, 0.069, 0.019), P, V, M*T*S);
 
 }
 
 void drawVela(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
     glm::mat4 S = glm::scale(I, glm::vec3(2, 2, 2));
-    drawObject(vela, glm::vec3(0, 0, 0), P, V, M*S);
+    //drawObject(vela, glm::vec3(0, 0, 0), P, V, M*S);
 
 }
 
@@ -429,7 +541,7 @@ void drawMueble(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     glm::mat4 S = glm::scale(I, glm::vec3(0.5, 0.5, 0.5));
     glm::mat4 Ry =glm::rotate(I, glm::radians(180.0f), glm::vec3(0, 1, 0));
     glm::mat4 T = glm::translate(I, glm::vec3(0, 1.3, 0));
-    drawObject(mueble, glm::vec3(0, 0, 0), P, V, M*T*Ry*S);
+    //drawObject(mueble, glm::vec3(0, 0, 0), P, V, M*T*Ry*S);
 
 }
 
@@ -437,35 +549,43 @@ void drawVentana(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
     glm::mat4 S = glm::scale(I, glm::vec3(0.1, 1.2, 0.1));
     glm::mat4 T1 = glm::translate(I, glm::vec3(0, 1, 0));
-    drawObject(cube, glm::vec3(0, 0, 0), P, V, M*T1*S);
+    //drawObject(cube, glm::vec3(0, 0, 0), P, V, M*T1*S);
 
     glm::mat4 Rz =glm::rotate(I, glm::radians(90.0f), glm::vec3(0, 0, 1));
     glm::mat4 T2 = glm::translate(I, glm::vec3(1.1, 2.1, 0));
-    drawObject(cube, glm::vec3(0, 0, 0), P, V, M*T2*Rz*S);
+    //drawObject(cube, glm::vec3(0, 0, 0), P, V, M*T2*Rz*S);
 
     glm::mat4 T3 = glm::translate(I, glm::vec3(1.1, -0.1, 0));
-    drawObject(cube, glm::vec3(0, 0, 0), P, V, M*T3*Rz*S);
+    //drawObject(cube, glm::vec3(0, 0, 0), P, V, M*T3*Rz*S);
 
     glm::mat4 T4 = glm::translate(I, glm::vec3(2.2, 1, 0));
-    drawObject(cube, glm::vec3(0, 0, 0), P, V, M*T4*S);
+    //drawObject(cube, glm::vec3(0, 0, 0), P, V, M*T4*S);
 
     glm::mat4 SCortinas = glm::scale(I, glm::vec3(1.3, 1.5, 1));
     glm::mat4 TCortinas = glm::translate(I, glm::vec3(1.2, -0.5, 0.2));
-    drawObject(cortinas, glm::vec3(0, 0, 0), P, V, M*TCortinas*SCortinas);
+    //drawObject(cortinas, glm::vec3(0, 0, 0), P, V, M*TCortinas*SCortinas);
 
 }
 
-void drawObject(Model &model, glm::vec3 color, glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+void drawObjectMat(Model &model, Material material, glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
+    shaders.setMat4("uN"  ,glm::transpose(glm::inverse(M)));
+    shaders.setMat4("uM"  ,M);
     shaders.setMat4("uPVM",P*V*M);
-
-    glEnable(GL_POLYGON_OFFSET_FILL);
-    shaders.setVec3("uColor",color);
+    shaders.setBool("uWithMaterials",true);
+    shaders.setMaterial("umaterial",material);
     model.renderModel(GL_FILL);
-    glDisable(GL_POLYGON_OFFSET_FILL);
 
-    shaders.setVec3("uColor",glm::vec3(1.0, 1.0, 1.0));
-    model.renderModel(GL_LINE);
+}
+
+void drawObjectTex(Model &model, Textures textures, glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+
+    shaders.setMat4("uN"  ,glm::transpose(glm::inverse(M)));
+    shaders.setMat4("uM"  ,M);
+    shaders.setMat4("uPVM",P*V*M);
+    shaders.setBool("uWithMaterials",false);
+    shaders.setTextures("utextures",textures);
+    model.renderModel(GL_FILL);
 
 }
 
