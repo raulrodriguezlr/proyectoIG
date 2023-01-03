@@ -43,6 +43,7 @@ Model triangle;
 Model tronco;
 Model vela;
 Model mueble;
+Model cortinas;
 
 
 // Viewport
@@ -133,6 +134,7 @@ void configScene() {
     tronco.initModel("resources/models/wooden.obj");
     vela.initModel("resources/models/vela_1.obj");
     mueble.initModel("resources/models/bookshelf.obj");
+    cortinas.initModel("resources/models/cortinas.obj");
 
 }
 
@@ -201,7 +203,10 @@ void renderScene() {
     drawMueble(P, V, TMueble);
 
     // Dibujamos ventana con cortinas (Iván)
-    drawVentana(P, V, I);
+    glm::mat4 SVentana = glm::scale(I, glm::vec3(1.5, 1.5, 1));
+    glm::mat4 Ry90 = glm::rotate(I, glm::radians(90.0f), glm::vec3(0, 1, 0));
+    glm::mat4 TVentana = glm::translate(I, glm::vec3(-10, 2.5, 3));
+    drawVentana(P, V, TVentana*Ry90*SVentana);
 
 }
 
@@ -214,16 +219,29 @@ void drawSuelo(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
 void drawParedes(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
-    glm::mat4 S1 = glm::scale(I, glm::vec3(5.0, 1.0, 10.0));
+    glm::mat4 S3 = glm::scale(I, glm::vec3(5.0, 1.0, 3.5));
     glm::mat4 Rz90 = glm::rotate(I, glm::radians(90.0f), glm::vec3(0, 0, 1));
-    glm::mat4 T1 = glm::translate(I, glm::vec3(-10, 5, 0));
-    drawObject(plane, glm::vec3(1.0, 0.0, 0.0), P, V, M*T1*Rz90*S1);
+    glm::mat4 T1 = glm::translate(I, glm::vec3(-10, 5, 6.5));
+    drawObject(plane, glm::vec3(1.0, 0.0, 0.0), P, V, M*T1*Rz90*S3);
+
+    glm::mat4 S4 = glm::scale(I, glm::vec3(5.0, 1.0, 4.8));
+    glm::mat4 T5 = glm::translate(I, glm::vec3(-10, 5, -5.2));
+    drawObject(plane, glm::vec3(1.0, 0.0, 0.0), P, V, M*T5*Rz90*S4);
+
+    glm::mat4 S5 = glm::scale(I, glm::vec3(2.2, 1.0, 1.8));
+    glm::mat4 T6 = glm::translate(I, glm::vec3(-10, 7.8, 1.2));
+    drawObject(plane, glm::vec3(1.0, 0.0, 0.0), P, V, M*T6*Rz90*S5);
+
+    glm::mat4 S6 = glm::scale(I, glm::vec3(1.1, 1.0, 1.8));
+    glm::mat4 T7 = glm::translate(I, glm::vec3(-10, 1.1, 1.2));
+    drawObject(plane, glm::vec3(1.0, 0.0, 0.0), P, V, M*T7*Rz90*S6);
 
     glm::mat4 S2 = glm::scale(I, glm::vec3(10.0, 1.0, 5.0));
     glm::mat4 Rx90 = glm::rotate(I, glm::radians(90.0f), glm::vec3(1, 0, 0));
     glm::mat4 T2 = glm::translate(I, glm::vec3(0, 5, -10));
     drawObject(plane, glm::vec3(1.0, 0.0, 0.0), P, V, M*T2*Rx90*S2);
 
+    glm::mat4 S1 = glm::scale(I, glm::vec3(5.0, 1.0, 10.0));
     glm::mat4 T3 = glm::translate(I, glm::vec3(10, 5, 0));
     drawObject(plane, glm::vec3(1.0, 0.0, 0.0), P, V, M*T3*Rz90*S1);
 
@@ -422,7 +440,17 @@ void drawVentana(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     drawObject(cube, glm::vec3(0, 0, 0), P, V, M*T1*S);
 
     glm::mat4 Rz =glm::rotate(I, glm::radians(90.0f), glm::vec3(0, 0, 1));
-    drawObject(cube, glm::vec3(0, 0, 0), P, V, M*T1*Rz*S);
+    glm::mat4 T2 = glm::translate(I, glm::vec3(1.1, 2.1, 0));
+    drawObject(cube, glm::vec3(0, 0, 0), P, V, M*T2*Rz*S);
+
+    glm::mat4 T3 = glm::translate(I, glm::vec3(1.1, -0.1, 0));
+    drawObject(cube, glm::vec3(0, 0, 0), P, V, M*T3*Rz*S);
+
+    glm::mat4 T4 = glm::translate(I, glm::vec3(2.2, 1, 0));
+    drawObject(cube, glm::vec3(0, 0, 0), P, V, M*T4*S);
+
+    glm::mat4 T5 = glm::translate(I, glm::vec3(0, 1, 0));
+    drawObject(cortinas, glm::vec3(1, 1, 1), P, V, M*T5);
 
 }
 
