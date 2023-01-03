@@ -1,0 +1,24 @@
+# Blender 3.3.0 MTL File: 'cau.blend'
+# www.blender.org
+
+newmtl 2K_Fabric_b
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Ns -s 4.5 4.5 4.5 C:/fabric02_roughness_xtm.jpg
+map_Bump -s 4.5 4.5 4.5 -bm 1.000000 C:/fabric02_normal_xtm.jpg
+
+newmtl 2K_Fabric_white
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 0.150000
+illum 9
+map_Ns -s 6 6 6 C:/fabric02_roughness_xtm.jpg
+map_Bump -s 6 6 6 -bm 1.000000 C:/fabric02_normal_xtm.jpg

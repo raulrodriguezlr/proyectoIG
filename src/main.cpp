@@ -449,8 +449,9 @@ void drawVentana(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     glm::mat4 T4 = glm::translate(I, glm::vec3(2.2, 1, 0));
     drawObject(cube, glm::vec3(0, 0, 0), P, V, M*T4*S);
 
-    glm::mat4 T5 = glm::translate(I, glm::vec3(0, 1, 0));
-    drawObject(cortinas, glm::vec3(1, 1, 1), P, V, M*T5);
+    glm::mat4 SCortinas = glm::scale(I, glm::vec3(1.3, 1.5, 1));
+    glm::mat4 TCortinas = glm::translate(I, glm::vec3(1.2, -0.5, 0.2));
+    drawObject(cortinas, glm::vec3(0, 0, 0), P, V, M*TCortinas*SCortinas);
 
 }
 
