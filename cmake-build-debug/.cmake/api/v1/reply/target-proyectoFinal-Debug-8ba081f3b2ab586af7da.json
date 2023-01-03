@@ -2,7 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "binary/proyectoFinal"
+			"path" : "binary/proyectoFinal.exe"
+		},
+		{
+			"path" : "binary/proyectoFinal.pdb"
 		}
 	],
 	"backtrace" : 1,
@@ -56,37 +59,34 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=13.0"
-				},
-				{
-					"fragment" : "-std=gnu++14"
+					"fragment" : "-g -fdiagnostics-color=always"
 				}
 			],
 			"includes" : 
 			[
 				{
 					"backtrace" : 4,
-					"path" : "/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/src"
+					"path" : "C:/Users/Raul/Desktop/IG/proyectoIG/src"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glew/include"
+					"path" : "C:/Users/Raul/Desktop/IG/proyectoIG/../libraries2122/glew/include"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glfw/include"
+					"path" : "C:/Users/Raul/Desktop/IG/proyectoIG/../libraries2122/glfw/include"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glm/include"
+					"path" : "C:/Users/Raul/Desktop/IG/proyectoIG/../libraries2122/glm/include"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/assimp/include"
+					"path" : "C:/Users/Raul/Desktop/IG/proyectoIG/../libraries2122/assimp/include"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/freeimage/include"
+					"path" : "C:/Users/Raul/Desktop/IG/proyectoIG/../libraries2122/freeimage/include"
 				}
 			],
 			"language" : "CXX",
@@ -121,32 +121,28 @@
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "-L/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glew/lib",
+				"fragment" : "-LC:\\Users\\Raul\\Desktop\\IG\\proyectoIG\\..\\libraries2122\\glew\\lib",
 				"role" : "libraryPath"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "-L/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glfw/lib",
+				"fragment" : "-LC:\\Users\\Raul\\Desktop\\IG\\proyectoIG\\..\\libraries2122\\glfw\\lib",
 				"role" : "libraryPath"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "-L/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glm/lib",
+				"fragment" : "-LC:\\Users\\Raul\\Desktop\\IG\\proyectoIG\\..\\libraries2122\\glm\\lib",
 				"role" : "libraryPath"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "-L/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/assimp/lib",
+				"fragment" : "-LC:\\Users\\Raul\\Desktop\\IG\\proyectoIG\\..\\libraries2122\\assimp\\lib",
 				"role" : "libraryPath"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "-L/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/freeimage/lib",
+				"fragment" : "-LC:\\Users\\Raul\\Desktop\\IG\\proyectoIG\\..\\libraries2122\\freeimage\\lib",
 				"role" : "libraryPath"
-			},
-			{
-				"fragment" : "-Wl,-rpath,/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glew/lib -Wl,-rpath,/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glfw/lib -Wl,-rpath,/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/glm/lib -Wl,-rpath,/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/assimp/lib -Wl,-rpath,/Users/raulrodriguezlopez-rey/Desktop/IG/PracticaFinal/proyectoIG/../libraries2122/freeimage/lib",
-				"role" : "libraries"
 			},
 			{
 				"backtrace" : 3,
@@ -177,12 +173,16 @@
 				"backtrace" : 3,
 				"fragment" : "-lfreeimage",
 				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32",
+				"role" : "libraries"
 			}
 		],
 		"language" : "CXX"
 	},
 	"name" : "proyectoFinal",
-	"nameOnDisk" : "proyectoFinal",
+	"nameOnDisk" : "proyectoFinal.exe",
 	"paths" : 
 	{
 		"build" : ".",
