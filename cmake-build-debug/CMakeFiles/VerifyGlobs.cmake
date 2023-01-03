@@ -7,6 +7,7 @@ file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "C:/Users/Raul/Desktop/IG/proy
 set(OLD_GLOB
   "C:/Users/Raul/Desktop/IG/proyectoIG/src/Model.cpp"
   "C:/Users/Raul/Desktop/IG/proyectoIG/src/Shaders.cpp"
+  "C:/Users/Raul/Desktop/IG/proyectoIG/src/Texture.cpp"
   "C:/Users/Raul/Desktop/IG/proyectoIG/src/main.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")

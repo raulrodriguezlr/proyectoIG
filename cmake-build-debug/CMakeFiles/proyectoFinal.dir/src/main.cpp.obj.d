@@ -272,4 +272,6 @@ CMakeFiles/proyectoFinal.dir/src/main.cpp.obj: \
  c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\material.inl \
  c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\anim.h \
  c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\metadata.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\postprocess.h
+ c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\postprocess.h \
+ C:\Users\Raul\Desktop\IG\proyectoIG\src\Texture.h \
+ c:\users\raul\desktop\ig\libraries2122\freeimage\include\freeimage.h

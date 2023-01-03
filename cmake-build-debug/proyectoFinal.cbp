@@ -104,6 +104,12 @@
 		<Unit filename="C:/Users/Raul/Desktop/IG/proyectoIG/src/Shaders.h">
 			<Option target="proyectoFinal"/>
 		</Unit>
+		<Unit filename="C:/Users/Raul/Desktop/IG/proyectoIG/src/Texture.cpp">
+			<Option target="proyectoFinal"/>
+		</Unit>
+		<Unit filename="C:/Users/Raul/Desktop/IG/proyectoIG/src/Texture.h">
+			<Option target="proyectoFinal"/>
+		</Unit>
 		<Unit filename="C:/Users/Raul/Desktop/IG/proyectoIG/src/main.cpp">
 			<Option target="proyectoFinal"/>
 		</Unit>
