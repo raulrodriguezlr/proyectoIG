@@ -49,30 +49,36 @@ Model mueble;
 Model cortinas;
 
 // Imagenes (texturas)
-Texture suelo;
-Texture paredes;
-Texture paredesVert;
-Texture paredesVertAbajo;
+Texture suelo;Texture sueloNormal;Texture sueloSpecular;
+
+Texture paredes;Texture paredesNormal;Texture paredesSpecular;
+Texture paredesVert;Texture paredesVertNormal;Texture paredesVertSpecular;
+Texture paredesVertAbajo;Texture paredesVertAbajoNormal;Texture paredesVertAbajoSpecular;
+
 Texture noEmissive;
 Texture chimenea;
 Texture NormChimenea;
 Texture SpeChimenea;
+
+
+
 // Luces y materiales
 #define   NLD 1
-#define   NLP 2
+#define   NLP 1
 #define   NLF 3
 Light     lightG;
 Light     lightD[NLD];
 Light     lightP[NLP];
 Light     lightF[NLF];
 Material  mluz;
+Material sol;
 
 Textures texSuelo;
 Textures texParedes;
 Textures texParedesVert;
 Textures texParedesVertAbajo;
 Textures texChimenea;
-
+Textures texSol;
 // Viewport
 int w = 1000;
 int h = 1000;
@@ -164,40 +170,66 @@ void configScene() {
 
     // Imagenes (texturas)
     suelo.initTexture("resources/textures/sueloMasPequenno.jpg");
+    sueloNormal.initTexture("resources/textures/sueloMasPequennoNormal.png");
+    sueloSpecular.initTexture("resources/textures/sueloMasPequennoSpecular.png");
+
+
+        //INICIO TEXTURAS PAREDES
     paredes.initTexture("resources/textures/newBrickWall.jpg");
+    paredesNormal.initTexture("resources/textures/newBrickWallNormal.png");
+    paredesSpecular.initTexture("resources/textures/newBrickWallSpecular.png");
+
     paredesVert.initTexture("resources/textures/newBrickWall200.jpg");
+    paredesVertNormal.initTexture("resources/textures/newBrickWall200Normal.jpg");
+    paredesVertSpecular.initTexture("resources/textures/newBrickWall200Specular.png");
+
+
     paredesVertAbajo.initTexture("resources/textures/newBrickWall400.jpg");
-    noEmissive.initTexture("resources/textures/imgNoEmissive.png");
+    paredesVertAbajoNormal.initTexture("resources/textures/newBrickWall400Normal.png");
+    paredesVertAbajoNormal.initTexture("resources/textures/newBrickWall400Specular.png");
+
+        //FINAL TEXTURAS PAREDES
 
     chimenea.initTexture("resources/textures/imgWallDiffuse.png");
-    SpeChimenea.initTexture("resources/textures/imgWallNormal.png");
-
+    SpeChimenea.initTexture("resources/textures/imgWallSpecular.png");
     NormChimenea.initTexture("resources/textures/imgWallNormal.png");
+
+   // sol.initTexture("resources/textures/sol.png");
+
+
+    noEmissive.initTexture("resources/textures/imgNoEmissive.png");
+
+
     // Luz ambiental global
     lightG.ambient = glm::vec3(0.5, 0.5, 0.5);
 
     // ****Luces direccionales****
-    lightD[0].direction = glm::vec3(0.0, -1.0, 0.0);
-    lightD[0].ambient   = glm::vec3( 0.1, 0.1, 0.1);
-    lightD[0].diffuse   = glm::vec3( 0.7, 0.7, 0.7);
-    lightD[0].specular  = glm::vec3( 0.7, 0.7, 0.7);
+   // lightD[0].direction = glm::vec3(0.0, 1.0, 5.0);
+ //   lightD[0].position  = glm::vec3( -15, 12, 0);
+   //
+ //   lightD[0].ambient   = glm::vec3( 0.1, 0.1, 0.1);
+    //lightD[0].diffuse   = glm::vec3( 0.7, 0.7, 0.7);
+    //lightD[0].specular  = glm::vec3( 0.7, 0.7, 0.7);
+
+    lightD[0].position    = glm::vec3(-15, 12.0, 0.0);
+    lightD[0].direction   = glm::vec3( -15.0, 5.0, 1.0);
+    lightD[0].ambient     = glm::vec3(0.2, 0.2, 0.2);
+    lightD[0].diffuse     = glm::vec3(0.9, 0.9, 0.9);
+    lightD[0].specular    = glm::vec3(0.9, 0.9, 0.9);
+    lightD[0].c0          = 1.00;
+    lightD[0].c1          = 1.00;
+    lightD[0].c2          =1.00;
 
     //***** Luces posicionales******
-    lightP[0].position    = glm::vec3(0.0, 3.0, 3.0);
+
+    //CAMBIAR Y AÑADIR LUCES Posicionales, las Posicionales son las que  pierden intensidad a lo largo del recorrido por el resto igual que focales
+    lightP[0].position    = glm::vec3(10.0, 3.0, 10.0);
     lightP[0].ambient     = glm::vec3(0.2, 0.2, 0.2);
     lightP[0].diffuse     = glm::vec3(0.9, 0.9, 0.9);
     lightP[0].specular    = glm::vec3(0.9, 0.9, 0.9);
     lightP[0].c0          = 1.00;
     lightP[0].c1          = 0.22;
     lightP[0].c2          = 0.20;
-    //CAMBIAR Y AÑADIR LUCES Posicionales, las Posicionales son las que  pierden intensidad a lo largo del recorrido por el resto igual que focales
-    lightP[1].position    = glm::vec3(10.0, 3.0, 10.0);
-    lightP[1].ambient     = glm::vec3(0.2, 0.2, 0.2);
-    lightP[1].diffuse     = glm::vec3(0.9, 0.9, 0.9);
-    lightP[1].specular    = glm::vec3(0.9, 0.9, 0.9);
-    lightP[1].c0          = 1.00;
-    lightP[1].c1          = 0.22;
-    lightP[1].c2          = 0.20;
 
 
     //***** Luces focales*****
@@ -234,6 +266,16 @@ void configScene() {
     lightF[2].c1          = 0.090;
     lightF[2].c2          = 0.032;
 
+    lightF[3].position    = glm::vec3(-15, 12.0, 0.0);
+    lightF[3].direction   = glm::vec3( 10.0, 5.0, 0.0);
+    lightF[3].ambient     = glm::vec3( 1,  1,  1);
+    lightF[3].diffuse     = glm::vec3( 0.9,  0.9,  0.9);
+    lightF[3].specular    = glm::vec3( 1,  1,  1);
+    lightF[3].innerCutOff = 30.0;
+    lightF[3].outerCutOff = lightF[0].innerCutOff + 5.0;
+    lightF[3].c0          = 1.000;
+    lightF[3].c1          =1;
+    lightF[3].c2          = 1;
 
 
 
@@ -245,29 +287,37 @@ void configScene() {
     mluz.emissive  = glm::vec4(1.0, 1.0, 1.0, 1.0);
     mluz.shininess = 1.0;
 
+    sol.ambient   = glm::vec4( 0.329412, 0.223529, 0.027451,1.0);
+    sol.diffuse   = glm::vec4( 0.780392, 0.568627, 0.113725, 1.0);
+    sol.specular  = glm::vec4(0.992157, 0.941176, 0.807843, 1.0);
+    sol.emissive  = glm::vec4(1,1,0,1);
+    sol.shininess = 27.897;
+
+
     texSuelo.diffuse   = suelo.getTexture();
-    texSuelo.specular  = suelo.getTexture();
+    texSuelo.specular  = sueloSpecular.getTexture();
     texSuelo.emissive  = noEmissive.getTexture();
-    texSuelo.normal    = 0;
+    texSuelo.normal    = sueloNormal.getTexture();
     texSuelo.shininess = 10.0;
 
     texParedes.diffuse   = paredes.getTexture();
-    texParedes.specular  = paredes.getTexture();
+    texParedes.specular  = paredesSpecular.getTexture();
     texParedes.emissive  = noEmissive.getTexture();
-    texParedes.normal    = 0;
+    texParedes.normal    = paredesNormal.getTexture();
     texParedes.shininess = 10.0;
 
     texParedesVert.diffuse   = paredesVert.getTexture();
-    texParedesVert.specular  = paredesVert.getTexture();
+    texParedesVert.specular  = paredesVertSpecular.getTexture();
     texParedesVert.emissive  = noEmissive.getTexture();
-    texParedesVert.normal    = 0;
+    texParedesVert.normal    = paredesVertNormal.getTexture();
     texParedesVert.shininess = 10.0;
 
     texParedesVertAbajo.diffuse  = paredesVertAbajo.getTexture();
-    texParedesVertAbajo.specular  = paredesVertAbajo.getTexture();
+    texParedesVertAbajo.specular  = paredesVertAbajoSpecular.getTexture();
     texParedesVertAbajo.emissive  = noEmissive.getTexture();
-    texParedesVertAbajo.normal    = 0;
+    texParedesVertAbajo.normal    = paredesVertAbajoNormal.getTexture();
     texParedesVertAbajo.shininess = 10.0;
+
 
     texChimenea.diffuse  = chimenea.getTexture();
     texChimenea.specular  = SpeChimenea.getTexture();
@@ -360,6 +410,12 @@ void setLights(glm::mat4 P, glm::mat4 V) {
     for(int i=0; i<NLP; i++) shaders.setLight("ulightP["+toString(i)+"]",lightP[i]);
     for(int i=0; i<NLF; i++) shaders.setLight("ulightF["+toString(i)+"]",lightF[i]);
 //DIBUJA LAS ESFERITAS
+
+    for(int i=0; i<NLD; i++) {
+        glm::mat4 M = glm::translate(I,lightD[i].position) * glm::scale(I,glm::vec3(4));
+        drawObjectMat(sphere, mluz, P, V, M);
+    }
+
     for(int i=0; i<NLP; i++) {
         glm::mat4 M = glm::translate(I,lightP[i].position) * glm::scale(I,glm::vec3(0.99));
         drawObjectMat(sphere, mluz, P, V, M);
@@ -412,7 +468,7 @@ void drawParedes(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     // Techo
     glm::mat4 S = glm::scale(I, glm::vec3(10.0, 1.0, 10.0));
     glm::mat4 T4 = glm::translate(I, glm::vec3(0, 10, 0));
-    //drawObject(plane, glm::vec3(1.0, 0.0, 0.0), P, V, M*T4*S);
+    drawObjectTex(plane,texSuelo, P, V, M*T4*S);
 
 }
 void drawChimenea(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
