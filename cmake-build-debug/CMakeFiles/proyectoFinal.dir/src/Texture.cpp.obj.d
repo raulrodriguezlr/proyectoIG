@@ -1,6 +1,5 @@
 CMakeFiles/proyectoFinal.dir/src/Texture.cpp.obj: \
- C:\Users\Raul\Desktop\IG\proyectoIG\src\Texture.cpp \
- C:\Users\Raul\Desktop\IG\proyectoIG\src\Texture.h \
+ C:\IG\proyectoIG\src\Texture.cpp C:\IG\proyectoIG\src\Texture.h \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\iostream \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\mingw32\bits\c++config.h \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\mingw32\bits\os_defines.h \
@@ -106,7 +105,6 @@ CMakeFiles/proyectoFinal.dir/src/Texture.cpp.obj: \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\bits\ostream.tcc \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\istream \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\bits\istream.tcc \
- c:\users\raul\desktop\ig\libraries2122\glew\include\gl\glew.h \
- c:\mingw\include\inttypes.h c:\mingw\include\gl\glu.h \
- c:\mingw\include\gl\gl.h \
- c:\users\raul\desktop\ig\libraries2122\freeimage\include\freeimage.h
+ c:\ig\libraries2122\glew\include\gl\glew.h c:\mingw\include\inttypes.h \
+ c:\mingw\include\gl\glu.h c:\mingw\include\gl\gl.h \
+ c:\ig\libraries2122\freeimage\include\freeimage.h

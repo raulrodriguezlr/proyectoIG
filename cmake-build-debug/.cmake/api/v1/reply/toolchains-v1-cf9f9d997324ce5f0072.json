@@ -98,7 +98,7 @@
 						"moldname"
 					]
 				},
-				"path" : "C:/MinGW/bin/c++.exe",
+				"path" : "C:/MinGW/bin/g++.exe",
 				"version" : "9.2.0"
 			},
 			"language" : "CXX",

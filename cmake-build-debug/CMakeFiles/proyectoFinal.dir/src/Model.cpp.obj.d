@@ -1,6 +1,5 @@
 CMakeFiles/proyectoFinal.dir/src/Model.cpp.obj: \
- C:\Users\Raul\Desktop\IG\proyectoIG\src\Model.cpp \
- C:\Users\Raul\Desktop\IG\proyectoIG\src\Model.h \
+ C:\IG\proyectoIG\src\Model.cpp C:\IG\proyectoIG\src\Model.h \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\iostream \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\mingw32\bits\c++config.h \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\mingw32\bits\os_defines.h \
@@ -112,11 +111,10 @@ CMakeFiles/proyectoFinal.dir/src/Model.cpp.obj: \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\bits\stl_vector.h \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\bits\stl_bvector.h \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\bits\vector.tcc \
- c:\users\raul\desktop\ig\libraries2122\glew\include\gl\glew.h \
- c:\mingw\include\inttypes.h c:\mingw\include\gl\glu.h \
- c:\mingw\include\gl\gl.h \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\glm.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/_fixes.hpp \
+ c:\ig\libraries2122\glew\include\gl\glew.h c:\mingw\include\inttypes.h \
+ c:\mingw\include\gl\glu.h c:\mingw\include\gl\gl.h \
+ c:\ig\libraries2122\glm\include\glm\glm.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/_fixes.hpp \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\cmath c:\mingw\include\math.h \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\climits \
  c:\mingw\include\limits.h \
@@ -124,124 +122,123 @@ CMakeFiles/proyectoFinal.dir/src/Model.cpp.obj: \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\float.h c:\mingw\include\float.h \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\limits \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\cassert \
- c:\mingw\include\assert.h \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\fwd.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_int.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/setup.hpp \
+ c:\mingw\include\assert.h c:\ig\libraries2122\glm\include\glm\fwd.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_int.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/setup.hpp \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\cstddef \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\simd\platform.h \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_float.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_vec.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/precision.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_mat.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\vec2.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_vec2.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_vec2.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\vec3.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_vec3.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_vec3.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\vec4.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_vec4.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_vec4.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_vec4_simd.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\mat2x2.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_mat2x2.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_mat2x2.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_matrix.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\mat2x3.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_mat2x3.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_mat2x3.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\mat2x4.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_mat2x4.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_mat2x4.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\mat3x2.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_mat3x2.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_mat3x2.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\mat3x3.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_mat3x3.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_mat3x3.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\mat3x4.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_mat3x4.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_mat3x4.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\mat4x2.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_mat4x2.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_mat4x2.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\mat4x3.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_mat4x3.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_mat4x3.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\mat4x4.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_mat4x4.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_mat4x4.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_mat4x4_simd.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_matrix.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\geometric.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_geometric.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_geometric.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_exponential.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_vec1.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_vec1.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_exponential.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_vector_relational.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_vector_relational.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_vector_relational_simd.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/_vectorize.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_exponential_simd.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\simd\exponential.h \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_common.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/_fixes.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_common.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_common_simd.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_geometric_simd.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\simd\geometric.h \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\simd\common.h \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_matrix_simd.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\trigonometric.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_trigonometric.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_trigonometric.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_trigonometric_simd.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\exponential.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\common.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\packing.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_packing.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_packing.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_half.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/type_half.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_packing_simd.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\matrix.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\vector_relational.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\integer.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_integer.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_integer.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\detail/func_integer_simd.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\simd\integer.h \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\gtc\type_ptr.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\gtc\quaternion.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\gtc\constants.hpp \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\gtc\constants.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\gtc\quaternion.inl \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\gtc\quaternion_simd.inl \
+ c:\ig\libraries2122\glm\include\glm\simd\platform.h \
+ c:\ig\libraries2122\glm\include\glm\detail/type_float.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_vec.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/precision.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_mat.hpp \
+ c:\ig\libraries2122\glm\include\glm\vec2.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_vec2.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_vec2.inl \
+ c:\ig\libraries2122\glm\include\glm\vec3.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_vec3.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_vec3.inl \
+ c:\ig\libraries2122\glm\include\glm\vec4.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_vec4.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_vec4.inl \
+ c:\ig\libraries2122\glm\include\glm\detail/type_vec4_simd.inl \
+ c:\ig\libraries2122\glm\include\glm\mat2x2.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_mat2x2.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_mat2x2.inl \
+ c:\ig\libraries2122\glm\include\glm\detail/func_matrix.hpp \
+ c:\ig\libraries2122\glm\include\glm\mat2x3.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_mat2x3.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_mat2x3.inl \
+ c:\ig\libraries2122\glm\include\glm\mat2x4.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_mat2x4.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_mat2x4.inl \
+ c:\ig\libraries2122\glm\include\glm\mat3x2.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_mat3x2.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_mat3x2.inl \
+ c:\ig\libraries2122\glm\include\glm\mat3x3.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_mat3x3.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_mat3x3.inl \
+ c:\ig\libraries2122\glm\include\glm\mat3x4.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_mat3x4.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_mat3x4.inl \
+ c:\ig\libraries2122\glm\include\glm\mat4x2.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_mat4x2.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_mat4x2.inl \
+ c:\ig\libraries2122\glm\include\glm\mat4x3.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_mat4x3.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_mat4x3.inl \
+ c:\ig\libraries2122\glm\include\glm\mat4x4.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_mat4x4.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_mat4x4.inl \
+ c:\ig\libraries2122\glm\include\glm\detail/type_mat4x4_simd.inl \
+ c:\ig\libraries2122\glm\include\glm\detail/func_matrix.inl \
+ c:\ig\libraries2122\glm\include\glm\geometric.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/func_geometric.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/func_geometric.inl \
+ c:\ig\libraries2122\glm\include\glm\detail/func_exponential.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_vec1.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_vec1.inl \
+ c:\ig\libraries2122\glm\include\glm\detail/func_exponential.inl \
+ c:\ig\libraries2122\glm\include\glm\detail/func_vector_relational.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/func_vector_relational.inl \
+ c:\ig\libraries2122\glm\include\glm\detail/func_vector_relational_simd.inl \
+ c:\ig\libraries2122\glm\include\glm\detail/_vectorize.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/func_exponential_simd.inl \
+ c:\ig\libraries2122\glm\include\glm\simd\exponential.h \
+ c:\ig\libraries2122\glm\include\glm\detail/func_common.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/_fixes.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/func_common.inl \
+ c:\ig\libraries2122\glm\include\glm\detail/func_common_simd.inl \
+ c:\ig\libraries2122\glm\include\glm\detail/func_geometric_simd.inl \
+ c:\ig\libraries2122\glm\include\glm\simd\geometric.h \
+ c:\ig\libraries2122\glm\include\glm\simd\common.h \
+ c:\ig\libraries2122\glm\include\glm\detail/func_matrix_simd.inl \
+ c:\ig\libraries2122\glm\include\glm\trigonometric.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/func_trigonometric.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/func_trigonometric.inl \
+ c:\ig\libraries2122\glm\include\glm\detail/func_trigonometric_simd.inl \
+ c:\ig\libraries2122\glm\include\glm\exponential.hpp \
+ c:\ig\libraries2122\glm\include\glm\common.hpp \
+ c:\ig\libraries2122\glm\include\glm\packing.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/func_packing.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/func_packing.inl \
+ c:\ig\libraries2122\glm\include\glm\detail/type_half.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/type_half.inl \
+ c:\ig\libraries2122\glm\include\glm\detail/func_packing_simd.inl \
+ c:\ig\libraries2122\glm\include\glm\matrix.hpp \
+ c:\ig\libraries2122\glm\include\glm\vector_relational.hpp \
+ c:\ig\libraries2122\glm\include\glm\integer.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/func_integer.hpp \
+ c:\ig\libraries2122\glm\include\glm\detail/func_integer.inl \
+ c:\ig\libraries2122\glm\include\glm\detail/func_integer_simd.inl \
+ c:\ig\libraries2122\glm\include\glm\simd\integer.h \
+ c:\ig\libraries2122\glm\include\glm\gtc\type_ptr.hpp \
+ c:\ig\libraries2122\glm\include\glm\gtc\quaternion.hpp \
+ c:\ig\libraries2122\glm\include\glm\gtc\constants.hpp \
+ c:\ig\libraries2122\glm\include\glm\gtc\constants.inl \
+ c:\ig\libraries2122\glm\include\glm\gtc\quaternion.inl \
+ c:\ig\libraries2122\glm\include\glm\gtc\quaternion_simd.inl \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\cstring \
  c:\mingw\include\string.h c:\mingw\include\strings.h \
  c:\mingw\include\wchar.h \
- c:\users\raul\desktop\ig\libraries2122\glm\include\glm\gtc\type_ptr.inl \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\importer.hpp \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\types.h \
+ c:\ig\libraries2122\glm\include\glm\gtc\type_ptr.inl \
+ c:\ig\libraries2122\assimp\include\assimp\importer.hpp \
+ c:\ig\libraries2122\assimp\include\assimp\types.h \
  c:\mingw\include\memory.h \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\math.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\defs.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\vector3.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\compiler\pushpack1.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\compiler\poppack1.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\vector2.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\color4.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\matrix3x3.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\matrix4x4.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\quaternion.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\vector2.inl \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\vector3.inl \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\color4.inl \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\quaternion.inl \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\matrix3x3.inl \
+ c:\ig\libraries2122\assimp\include\assimp\defs.h \
+ c:\ig\libraries2122\assimp\include\assimp\vector3.h \
+ c:\ig\libraries2122\assimp\include\assimp\compiler\pushpack1.h \
+ c:\ig\libraries2122\assimp\include\assimp\compiler\poppack1.h \
+ c:\ig\libraries2122\assimp\include\assimp\vector2.h \
+ c:\ig\libraries2122\assimp\include\assimp\color4.h \
+ c:\ig\libraries2122\assimp\include\assimp\matrix3x3.h \
+ c:\ig\libraries2122\assimp\include\assimp\matrix4x4.h \
+ c:\ig\libraries2122\assimp\include\assimp\quaternion.h \
+ c:\ig\libraries2122\assimp\include\assimp\vector2.inl \
+ c:\ig\libraries2122\assimp\include\assimp\vector3.inl \
+ c:\ig\libraries2122\assimp\include\assimp\color4.inl \
+ c:\ig\libraries2122\assimp\include\assimp\quaternion.inl \
+ c:\ig\libraries2122\assimp\include\assimp\matrix3x3.inl \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\algorithm \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\utility \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\bits\stl_relops.h \
@@ -250,15 +247,15 @@ CMakeFiles/proyectoFinal.dir/src/Model.cpp.obj: \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\bits\stl_heap.h \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\bits\stl_tempbuf.h \
  c:\mingw\lib\gcc\mingw32\9.2.0\include\c++\bits\uniform_int_dist.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\matrix4x4.inl \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\config.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\scene.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\texture.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\mesh.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\light.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\camera.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\material.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\material.inl \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\anim.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\metadata.h \
- c:\users\raul\desktop\ig\libraries2122\assimp\include\assimp\postprocess.h
+ c:\ig\libraries2122\assimp\include\assimp\matrix4x4.inl \
+ c:\ig\libraries2122\assimp\include\assimp\config.h \
+ c:\ig\libraries2122\assimp\include\assimp\scene.h \
+ c:\ig\libraries2122\assimp\include\assimp\texture.h \
+ c:\ig\libraries2122\assimp\include\assimp\mesh.h \
+ c:\ig\libraries2122\assimp\include\assimp\light.h \
+ c:\ig\libraries2122\assimp\include\assimp\camera.h \
+ c:\ig\libraries2122\assimp\include\assimp\material.h \
+ c:\ig\libraries2122\assimp\include\assimp\material.inl \
+ c:\ig\libraries2122\assimp\include\assimp\anim.h \
+ c:\ig\libraries2122\assimp\include\assimp\metadata.h \
+ c:\ig\libraries2122\assimp\include\assimp\postprocess.h
