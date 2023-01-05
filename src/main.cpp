@@ -23,7 +23,9 @@ void drawCuerpoChimenea(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawTroncos(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawAlfombra(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawBalda(glm::mat4 P, glm::mat4 V, glm::mat4 M);
-float* drawVela(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void drawVela(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void drawLlamaVela(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+
 void drawMueble(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawVentana(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 
@@ -58,9 +60,11 @@ Texture paredesVert;Texture paredesVertNormal;Texture paredesVertSpecular;
 Texture paredesVertAbajo;Texture paredesVertAbajoNormal;Texture paredesVertAbajoSpecular;
 
 Texture noEmissive;
+
 Texture chimenea;
 Texture NormChimenea;
 Texture SpeChimenea;
+Texture troncoDifusa;Texture troncoNormal;Texture troncoSpecular;
 
 Texture sofa;
 Texture sofaNormal;
@@ -71,9 +75,9 @@ Texture mesaNormal;
 Texture mesaSpecular;
 
 Texture velaTex;
-Texture candleFlame;
-Texture candleFlameNormal;
-Texture candleFlameSpecular;
+Texture Flame;
+Texture FlameNormal;
+Texture FlameSpecular;
 
 Texture muebleTex;
 Texture muebleNormal;
@@ -99,11 +103,12 @@ Textures texParedes;
 Textures texParedesVert;
 Textures texParedesVertAbajo;
 Textures texChimenea;
-Textures texSol;
+Textures texTroncos;
+
 Textures texSofa;
 Textures texMesa;
 Textures texVela;
-Textures texCandleFlame;
+Textures texFlame;
 
 Textures texMueble;
 
@@ -123,6 +128,8 @@ float desZ = 0.0;
 float velas=0.9;
 float velasAmb=0.2;
 int contadorVelas=0;
+float posChimenea=0;
+float posVela1=5.1;
 
 // Movimiento de camara
 float fovy   = 60.0;
@@ -230,6 +237,10 @@ void configScene() {
     chimenea.initTexture("resources/textures/imgWallDiffuse.png");
     SpeChimenea.initTexture("resources/textures/imgWallSpecular.png");
     NormChimenea.initTexture("resources/textures/imgWallNormal.png");
+    troncoDifusa.initTexture("resources/textures/WoodenDifusa.jpeg");
+    troncoSpecular.initTexture("resources/textures/WoodenSpecular.jpeg");
+    troncoNormal.initTexture("resources/textures/WoodenNormal.jpeg");
+
 
     noEmissive.initTexture("resources/textures/imgNoEmissive.png");
 
@@ -242,9 +253,9 @@ void configScene() {
     mesaSpecular.initTexture("resources/textures/mesaSpecular.png");
 
     velaTex.initTexture("resources/textures/vela.png");
-    candleFlame.initTexture("resources/textures/candleFlame.png");
-    candleFlameNormal.initTexture("resources/textures/candleFlameNormal.png");
-    candleFlameSpecular.initTexture("resources/textures/candleFlameSpecular.png");
+    Flame.initTexture("resources/textures/llama.png");
+    FlameNormal.initTexture("resources/textures/llamaNormal.png");
+    FlameSpecular.initTexture("resources/textures/llamaSpecular.png");
 
 
 
@@ -291,16 +302,6 @@ void configScene() {
     lightF[0].c2          = 0.032;
     //CAMBIAR Y AÑADIR LUCES FOCALES, las focales son las que no pierden intensidad a lo largo del recorrido por el resto igual que posicionales
 
-
-
-
-
-
-
-
-
-
-
     // *****Materiales*****
     mluz.ambient   = glm::vec4(0.0, 0.0, 0.0, 1.0);
     mluz.diffuse   = glm::vec4(0.0, 0.0, 0.0, 1.0);
@@ -333,9 +334,9 @@ void configScene() {
     perl.shininess = 11.264f;
 
     goldShine.ambient   = glm::vec4( 0.24725f, 0.1995f, 0.0745f, 1.0f);
-    goldShine.diffuse   = glm::vec4(0.75164f, 0.60648f, 0.22648f, 1.0f);
+    goldShine.diffuse   = glm::vec4(0.65164f, 0.30648f, 0.12648f, 1.0f);
     goldShine.specular  = glm::vec4(0.628281f, 0.555802f, 0.366065f, 1.0f);
-    goldShine.emissive  = glm::vec4(1,1,1,1);
+    goldShine.emissive  = glm::vec4(1,0.62,0,1);
     goldShine.shininess = 51.2f;
 
 
@@ -370,6 +371,12 @@ void configScene() {
     texChimenea.normal    = NormChimenea.getTexture();
     texChimenea.shininess = 10.0;
 
+    texTroncos.diffuse  = troncoDifusa.getTexture();
+    texTroncos.specular  = troncoSpecular.getTexture();
+    texTroncos.emissive  = noEmissive.getTexture();
+    texTroncos.normal    = troncoNormal.getTexture();
+    texTroncos.shininess = 10.0;
+
     texSofa.diffuse  = sofa.getTexture();
     texSofa.specular  = sofaSpecular.getTexture();
     texSofa.emissive  = noEmissive.getTexture();
@@ -394,11 +401,11 @@ void configScene() {
     texMueble.normal    = muebleNormal.getTexture();
     texMueble.shininess = 10.0;
 
-    texCandleFlame.diffuse=candleFlame.getTexture();
-    texCandleFlame.specular=candleFlameSpecular.getTexture();
-    texCandleFlame.emissive=candleFlameSpecular.getTexture();
-    texCandleFlame.normal=candleFlameNormal.getTexture();
-    texCandleFlame.shininess = 10.0;
+    texFlame.diffuse=Flame.getTexture();
+    texFlame.specular=FlameSpecular.getTexture();
+    texFlame.emissive=noEmissive.getTexture();
+    texFlame.normal=FlameNormal.getTexture();
+    texFlame.shininess = 10.0;
 
 
 }
@@ -473,8 +480,10 @@ void renderScene() {
     drawAlfombra(P,V,TMesa);
 
     // Dibujamos velas (Iván)
-    glm::mat4 TVela = glm::translate(I, glm::vec3(8, 5.1, -9.8));
+    glm::mat4 TVela = glm::translate(I, glm::vec3(8, 5.5, -9.8));
     drawVela(P,V,I*TVela);
+    glm::mat4 Tllama = glm::translate(I, glm::vec3(8, posVela1, -9.8));
+    drawLlamaVela(P,V,I*Tllama);
     xv1=8;yv1=5.5;zv1=-9.8;
 
     // Dibujamos mueble con libros (Iván)
@@ -504,7 +513,7 @@ void setLights(glm::mat4 P, glm::mat4 V) {
     }
 */
     for(int i=0; i<NLP; i++) {
-        glm::mat4 M = glm::translate(I,lightP[i].position) * glm::scale(I,glm::vec3(0.1));
+        glm::mat4 M = glm::translate(I,lightP[i].position) * glm::scale(I,glm::vec3(0.021));
         drawObjectMat(sphere, mluz, P, V, M);
     }
 
@@ -607,9 +616,18 @@ void drawTroncos(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     glm::mat4 S = glm::scale(I, glm::vec3(2, 0.5, 1));
     glm::mat4 R1 =glm::rotate(I, glm::radians(90.0f), glm::vec3(0, 0, 1));
 
-    //drawObject(tronco, glm::vec3(1, 0, 1), P, V, M*T1*R1*S);
-    //drawObject(tronco, glm::vec3(1, 1, 0.5), P, V, M*T2*R1*S);
-    //drawObject(tronco, glm::vec3(1, 0.5, 1), P, V, M*T3*R1*S);
+    //DIBUJAMOS LA LEÑA
+    drawObjectTex(tronco, texTroncos, P, V, M*T1*R1*S);
+    drawObjectTex(tronco,texTroncos, P, V, M*T2*R1*S);
+    drawObjectTex(tronco, texTroncos, P, V, M*T3*R1*S);
+
+    //DIBUJAMOS LA LLAMA
+    glm::mat4 Tll = glm::translate(I, glm::vec3(0, 2.4, -0.25));
+
+    glm::mat4 SLL = glm::scale(I, glm::vec3(0.5, 0.5, 0.5));
+    drawObjectMat(flame, goldShine, P, V, M*Tll*SLL);
+
+
 
 
 }
@@ -724,18 +742,21 @@ void drawPata(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
 }
 
-float* drawVela(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+void drawVela(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+    glm::mat4 T = glm::translate(I, glm::vec3(0, -0.2, 0.1));
 
     glm::mat4 S = glm::scale(I, glm::vec3(2, 2, 2));
-    drawObjectMat(vela, ruby, P, V, M*S);
+    drawObjectMat(vela, ruby, P, V, M*S*T);
+
+
+
+}
+void drawLlamaVela(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+
     glm::mat4 S1 = glm::scale(I, glm::vec3(0.09, 0.09, 0.09));
-    glm::mat4 T = glm::translate(I, glm::vec3(0, 0.2, 0));
+    glm::mat4 T = glm::translate(I, glm::vec3(0, 0.2, 0.2));
     drawObjectMat(flame, goldShine, P, V, M*T*S1);
-    float x= M[0][0];
-    float y= M[1][1];
-    float z= M[2][2];
-    static float vector[3]={x,y,z};
-    return vector;
+
 
 }
 
@@ -817,9 +838,12 @@ void funKey(GLFWwindow* window, int key  , int scancode, int action, int mods) {
                 if (contadorVelas % 2 == 1) {
                     velas = 0;
                     velasAmb = 0;
+                    posVela1=-10;
                 }else{velas = 0.9;
-                    velasAmb = 0.2;}
-             
+                    velasAmb = 0.2;
+                     posVela1=5.1;
+                }
+
             }
 
             break;
