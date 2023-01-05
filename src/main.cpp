@@ -292,16 +292,7 @@ void configScene() {
     //CAMBIAR Y AÑADIR LUCES FOCALES, las focales son las que no pierden intensidad a lo largo del recorrido por el resto igual que posicionales
 
 
-    lightF[1].position    = glm::vec3( 2.0,  2.0,  5.0);
-    lightF[1].direction   = glm::vec3(-2.0, 2.0, -5.0);
-    lightF[1].ambient     = glm::vec3( 0.2,  0.2,  0.2);
-    lightF[1].diffuse     = glm::vec3( 0.9,  0.9,  0.9);
-    lightF[1].specular    = glm::vec3( 0.9,  0.9,  0.9);
-    lightF[1].innerCutOff = 10.0;
-    lightF[1].outerCutOff = lightF[1].innerCutOff + 1.0;
-    lightF[1].c0          = 1.000;
-    lightF[1].c1          = 0.090;
-    lightF[1].c2          = 0.032;
+
 
 
 
@@ -828,7 +819,7 @@ void funKey(GLFWwindow* window, int key  , int scancode, int action, int mods) {
                     velasAmb = 0;
                 }else{velas = 0.9;
                     velasAmb = 0.2;}
-                std::cout<<"El valor de la vela es: "<<velas<<std::endl;
+             
             }
 
             break;
