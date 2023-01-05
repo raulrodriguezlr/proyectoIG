@@ -59,34 +59,34 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g"
+					"fragment" : "-g -fdiagnostics-color=always"
 				}
 			],
 			"includes" : 
 			[
 				{
 					"backtrace" : 4,
-					"path" : "C:/IG/proyectoIG/src"
+					"path" : "C:/Users/Raul/Desktop/IG/proyectoIG/src"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/IG/proyectoIG/../libraries2122/glew/include"
+					"path" : "C:/Users/Raul/Desktop/IG/proyectoIG/../libraries2122/glew/include"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/IG/proyectoIG/../libraries2122/glfw/include"
+					"path" : "C:/Users/Raul/Desktop/IG/proyectoIG/../libraries2122/glfw/include"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/IG/proyectoIG/../libraries2122/glm/include"
+					"path" : "C:/Users/Raul/Desktop/IG/proyectoIG/../libraries2122/glm/include"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/IG/proyectoIG/../libraries2122/assimp/include"
+					"path" : "C:/Users/Raul/Desktop/IG/proyectoIG/../libraries2122/assimp/include"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "C:/IG/proyectoIG/../libraries2122/freeimage/include"
+					"path" : "C:/Users/Raul/Desktop/IG/proyectoIG/../libraries2122/freeimage/include"
 				}
 			],
 			"language" : "CXX",
@@ -122,27 +122,27 @@
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "-LC:\\IG\\proyectoIG\\..\\libraries2122\\glew\\lib",
+				"fragment" : "-LC:\\Users\\Raul\\Desktop\\IG\\proyectoIG\\..\\libraries2122\\glew\\lib",
 				"role" : "libraryPath"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "-LC:\\IG\\proyectoIG\\..\\libraries2122\\glfw\\lib",
+				"fragment" : "-LC:\\Users\\Raul\\Desktop\\IG\\proyectoIG\\..\\libraries2122\\glfw\\lib",
 				"role" : "libraryPath"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "-LC:\\IG\\proyectoIG\\..\\libraries2122\\glm\\lib",
+				"fragment" : "-LC:\\Users\\Raul\\Desktop\\IG\\proyectoIG\\..\\libraries2122\\glm\\lib",
 				"role" : "libraryPath"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "-LC:\\IG\\proyectoIG\\..\\libraries2122\\assimp\\lib",
+				"fragment" : "-LC:\\Users\\Raul\\Desktop\\IG\\proyectoIG\\..\\libraries2122\\assimp\\lib",
 				"role" : "libraryPath"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "-LC:\\IG\\proyectoIG\\..\\libraries2122\\freeimage\\lib",
+				"fragment" : "-LC:\\Users\\Raul\\Desktop\\IG\\proyectoIG\\..\\libraries2122\\freeimage\\lib",
 				"role" : "libraryPath"
 			},
 			{

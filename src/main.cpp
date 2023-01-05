@@ -23,7 +23,7 @@ void drawCuerpoChimenea(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawTroncos(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawAlfombra(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawBalda(glm::mat4 P, glm::mat4 V, glm::mat4 M);
-void drawVela(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+float* drawVela(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawMueble(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawVentana(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 
@@ -49,6 +49,7 @@ Model flame;
 Model mueble;
 Model cortinas;
 
+
 // Imagenes (texturas)
 Texture suelo;Texture sueloNormal;Texture sueloSpecular;
 
@@ -70,6 +71,9 @@ Texture mesaNormal;
 Texture mesaSpecular;
 
 Texture velaTex;
+Texture candleFlame;
+Texture candleFlameNormal;
+Texture candleFlameSpecular;
 
 Texture muebleTex;
 Texture muebleNormal;
@@ -77,8 +81,8 @@ Texture muebleSpecular;
 
 // Luces y materiales
 #define   NLD 1
-#define   NLP 1
-#define   NLF 3
+#define   NLP 2
+#define   NLF 2
 Light     lightG;
 Light     lightD[NLD];
 Light     lightP[NLP];
@@ -87,6 +91,8 @@ Material  mluz;
 Material sol;
 Material mventilador;
 Material ruby;
+Material perl;
+Material goldShine;
 
 Textures texSuelo;
 Textures texParedes;
@@ -97,7 +103,10 @@ Textures texSol;
 Textures texSofa;
 Textures texMesa;
 Textures texVela;
+Textures texCandleFlame;
+
 Textures texMueble;
+
 
 // Viewport
 int w = 1000;
@@ -110,6 +119,11 @@ float desX = 0.0;
 float rotY = 0.0;
 float desZ = 0.0;
 
+//Luminosidad
+float velas=0.9;
+float velasAmb=0.2;
+int contadorVelas=0;
+
 // Movimiento de camara
 float fovy   = 60.0;
 float alphaX =  0.0;
@@ -118,6 +132,9 @@ float alphaY =  0.0;
 // Rotacion por tiempo
 float RTiempo = 0;
 int rotVentilador = 0;
+
+//Luces de las velas
+float xv1=0.0;float yv1=0.0;float zv1=0.0;
 
 int main() {
 
@@ -204,7 +221,6 @@ void configScene() {
     paredesVertNormal.initTexture("resources/textures/newBrickWall200Normal.jpg");
     paredesVertSpecular.initTexture("resources/textures/newBrickWall200Specular.png");
 
-
     paredesVertAbajo.initTexture("resources/textures/newBrickWall400.jpg");
     paredesVertAbajoNormal.initTexture("resources/textures/newBrickWall400Normal.png");
     paredesVertAbajoNormal.initTexture("resources/textures/newBrickWall400Specular.png");
@@ -214,9 +230,6 @@ void configScene() {
     chimenea.initTexture("resources/textures/imgWallDiffuse.png");
     SpeChimenea.initTexture("resources/textures/imgWallSpecular.png");
     NormChimenea.initTexture("resources/textures/imgWallNormal.png");
-
-   // sol.initTexture("resources/textures/sol.png");
-
 
     noEmissive.initTexture("resources/textures/imgNoEmissive.png");
 
@@ -229,6 +242,11 @@ void configScene() {
     mesaSpecular.initTexture("resources/textures/mesaSpecular.png");
 
     velaTex.initTexture("resources/textures/vela.png");
+    candleFlame.initTexture("resources/textures/candleFlame.png");
+    candleFlameNormal.initTexture("resources/textures/candleFlameNormal.png");
+    candleFlameSpecular.initTexture("resources/textures/candleFlameSpecular.png");
+
+
 
     muebleTex.initTexture("resources/textures/mueble.jpg");
     muebleNormal.initTexture("resources/textures/muebleNormal.png");
@@ -236,24 +254,16 @@ void configScene() {
 
 
     // Luz ambiental global
-    lightG.ambient = glm::vec3(0.5, 0.5, 0.5);
+    lightG.ambient = glm::vec3(0.2, 0.2, 0.2);
 
     // ****Luces direccionales****
-   // lightD[0].direction = glm::vec3(0.0, 1.0, 5.0);
- //   lightD[0].position  = glm::vec3( -15, 12, 0);
-   //
- //   lightD[0].ambient   = glm::vec3( 0.1, 0.1, 0.1);
-    //lightD[0].diffuse   = glm::vec3( 0.7, 0.7, 0.7);
-    //lightD[0].specular  = glm::vec3( 0.7, 0.7, 0.7);
+    lightD[0].direction = glm::vec3(0.0, 0.0, 1.0);
+    lightD[0].ambient   = glm::vec3( 0.1, 0.1, 0.1);
+    lightD[0].diffuse   = glm::vec3( 0.7, 0.7, 0.7);
+    lightD[0].specular  = glm::vec3( 0.7, 0.7, 0.7);
 
-    lightD[0].position    = glm::vec3(-15, 12.0, 0.0);
-    lightD[0].direction   = glm::vec3( -15.0, 5.0, 1.0);
-    lightD[0].ambient     = glm::vec3(0.2, 0.2, 0.2);
-    lightD[0].diffuse     = glm::vec3(0.9, 0.9, 0.9);
-    lightD[0].specular    = glm::vec3(0.9, 0.9, 0.9);
-    lightD[0].c0          = 1.00;
-    lightD[0].c1          = 1.00;
-    lightD[0].c2          =1.00;
+
+
 
     //***** Luces posicionales******
 
@@ -267,18 +277,21 @@ void configScene() {
     lightP[0].c2          = 0.20;
 
 
+
     //***** Luces focales*****
-    lightF[0].position    = glm::vec3(-2.0,  5.0,  5.0);
-    lightF[0].direction   = glm::vec3( 2.0, 0.0, -5.0);
-    lightF[0].ambient     = glm::vec3( 0.2,  0.2,  0.2);
-    lightF[0].diffuse     = glm::vec3( 0.9,  0.9,  0.9);
-    lightF[0].specular    = glm::vec3( 0.9,  0.9,  0.9);
+    lightF[0].position    = glm::vec3(0,  0.0,  0.0);
+    lightF[0].direction   = glm::vec3( 0.0, 0.0, 0.0);
+    lightF[0].ambient     = glm::vec3( 0.0,  0.0,  0.0);
+    lightF[0].diffuse     = glm::vec3( 0.9,  0.9,  0.0);
+    lightF[0].specular    = glm::vec3( 0.0,  0.0,  0.0);
     lightF[0].innerCutOff = 10.0;
     lightF[0].outerCutOff = lightF[0].innerCutOff + 5.0;
     lightF[0].c0          = 1.000;
     lightF[0].c1          = 0.090;
     lightF[0].c2          = 0.032;
     //CAMBIAR Y AÑADIR LUCES FOCALES, las focales son las que no pierden intensidad a lo largo del recorrido por el resto igual que posicionales
+
+
     lightF[1].position    = glm::vec3( 2.0,  2.0,  5.0);
     lightF[1].direction   = glm::vec3(-2.0, 2.0, -5.0);
     lightF[1].ambient     = glm::vec3( 0.2,  0.2,  0.2);
@@ -290,27 +303,9 @@ void configScene() {
     lightF[1].c1          = 0.090;
     lightF[1].c2          = 0.032;
 
-    lightF[2].position    = glm::vec3( 1.0,  2.0,  1.0);
-    lightF[2].direction   = glm::vec3(5.0, 0.0, 1.0);
-    lightF[2].ambient     = glm::vec3( 0.99,  0.99,  0.9);
-    lightF[2].diffuse     = glm::vec3( 0.99,  0.99,  0.99);
-    lightF[2].specular    = glm::vec3( 0.9,  0.9,  0.9);
-    lightF[2].innerCutOff = 5.0;
-    lightF[2].outerCutOff = lightF[2].innerCutOff + 1.0;
-    lightF[2].c0          = 1.000;
-    lightF[2].c1          = 0.090;
-    lightF[2].c2          = 0.032;
 
-    lightF[3].position    = glm::vec3(-15, 12.0, 0.0);
-    lightF[3].direction   = glm::vec3( 10.0, 5.0, 0.0);
-    lightF[3].ambient     = glm::vec3( 1,  1,  1);
-    lightF[3].diffuse     = glm::vec3( 0.9,  0.9,  0.9);
-    lightF[3].specular    = glm::vec3( 1,  1,  1);
-    lightF[3].innerCutOff = 30.0;
-    lightF[3].outerCutOff = lightF[0].innerCutOff + 5.0;
-    lightF[3].c0          = 1.000;
-    lightF[3].c1          =1;
-    lightF[3].c2          = 1;
+
+
 
 
 
@@ -339,6 +334,18 @@ void configScene() {
     ruby.specular  = glm::vec4(0.727811, 0.626959, 0.626959, 0.55);
     ruby.emissive  = glm::vec4(0.000000, 0.000000, 0.000000, 1.00);
     ruby.shininess = 76.8;
+
+    perl.ambient   = glm::vec4(0.25f, 0.20725f, 0.20725f, 0.922f );
+    perl.diffuse   = glm::vec4(1.0f, 0.829f, 0.829f, 0.922f);
+    perl.specular  = glm::vec4(0.296648f, 0.296648f, 0.296648f, 0.922f);
+    perl.emissive  = glm::vec4(0.000000, 0.000000, 0.000000, 1.00);
+    perl.shininess = 11.264f;
+
+    goldShine.ambient   = glm::vec4( 0.24725f, 0.1995f, 0.0745f, 1.0f);
+    goldShine.diffuse   = glm::vec4(0.75164f, 0.60648f, 0.22648f, 1.0f);
+    goldShine.specular  = glm::vec4(0.628281f, 0.555802f, 0.366065f, 1.0f);
+    goldShine.emissive  = glm::vec4(1,1,1,1);
+    goldShine.shininess = 51.2f;
 
 
     texSuelo.diffuse   = suelo.getTexture();
@@ -396,9 +403,25 @@ void configScene() {
     texMueble.normal    = muebleNormal.getTexture();
     texMueble.shininess = 10.0;
 
+    texCandleFlame.diffuse=candleFlame.getTexture();
+    texCandleFlame.specular=candleFlameSpecular.getTexture();
+    texCandleFlame.emissive=candleFlameSpecular.getTexture();
+    texCandleFlame.normal=candleFlameNormal.getTexture();
+    texCandleFlame.shininess = 10.0;
+
+
 }
 
 void renderScene() {
+    //Vela 1
+    lightP[1].position    = glm::vec3(xv1, yv1, zv1);
+    //std::cout<<lightP[1].position[0]<<lightP[1].position[1]<<lightP[1].position[2]<<std::endl;
+    lightP[1].ambient     = glm::vec3(velasAmb, velasAmb, velasAmb);
+    lightP[1].diffuse     = glm::vec3(velas, velas, velas);
+    lightP[1].specular    = glm::vec3(velas, velas, velas);
+    lightP[1].c0          = 1.00;
+    lightP[1].c1          = 0.6;
+    lightP[1].c2          = 0.3;
 
     // Borramos el buffer de color
     glClearColor(0.0, 0.0, 0.0, 0.0);
@@ -459,8 +482,9 @@ void renderScene() {
     drawAlfombra(P,V,TMesa);
 
     // Dibujamos velas (Iván)
-    glm::mat4 TVela = glm::translate(I, glm::vec3(8, 5.1, -10));
-    drawVela(P, V, TVela);
+    glm::mat4 TVela = glm::translate(I, glm::vec3(8, 5.1, -9.8));
+    drawVela(P,V,I*TVela);
+    xv1=8;yv1=5.5;zv1=-9.8;
 
     // Dibujamos mueble con libros (Iván)
     glm::mat4 TMueble = glm::translate(I, glm::vec3(9.1, 0, 0));
@@ -472,6 +496,7 @@ void renderScene() {
     glm::mat4 TVentana = glm::translate(I, glm::vec3(-10, 2.5, 3));
     drawVentana(P, V, TVentana*Ry90*SVentana);
 
+
 }
 
 void setLights(glm::mat4 P, glm::mat4 V) {
@@ -481,21 +506,21 @@ void setLights(glm::mat4 P, glm::mat4 V) {
     for(int i=0; i<NLP; i++) shaders.setLight("ulightP["+toString(i)+"]",lightP[i]);
     for(int i=0; i<NLF; i++) shaders.setLight("ulightF["+toString(i)+"]",lightF[i]);
 //DIBUJA LAS ESFERITAS
-
+/*
     for(int i=0; i<NLD; i++) {
         glm::mat4 M = glm::translate(I,lightD[i].position) * glm::scale(I,glm::vec3(4));
         drawObjectMat(sphere, mluz, P, V, M);
     }
-
+*/
     for(int i=0; i<NLP; i++) {
-        glm::mat4 M = glm::translate(I,lightP[i].position) * glm::scale(I,glm::vec3(0.99));
+        glm::mat4 M = glm::translate(I,lightP[i].position) * glm::scale(I,glm::vec3(0.1));
         drawObjectMat(sphere, mluz, P, V, M);
     }
 
     for(int i=0; i<NLF; i++) {
         glm::mat4 M = glm::translate(I,lightF[i].position) * glm::scale(I,glm::vec3(0.025));
         drawObjectMat(sphere, mluz, P, V, M);
-    }
+        }
 
 }
 
@@ -608,10 +633,10 @@ void drawBalda(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
     glm::mat4 S = glm::scale(I, glm::vec3(2, 0.15, 0.6));
     glm::mat4 T = glm::translate(I, glm::vec3(0, 0, 0.6));
-    //drawObject(cube, glm::vec3(1, 1, 1), P, V, M*T*S);
+    drawObjectMat(cube, perl, P, V, M*T*S);
     glm::mat4 S1 = glm::scale(I, glm::vec3(3, 0.15, 0.6));
     glm::mat4 T1 = glm::translate(I, glm::vec3(-1, -2, 0.6));
-    //drawObject(cube, glm::vec3(1, 1, 1), P, V, M*T1*S1);
+    drawObjectMat(cube, perl, P, V, M*T1*S1);
 
 }
 void drawSofa(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
@@ -708,13 +733,18 @@ void drawPata(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
 }
 
-void drawVela(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+float* drawVela(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
     glm::mat4 S = glm::scale(I, glm::vec3(2, 2, 2));
     drawObjectMat(vela, ruby, P, V, M*S);
     glm::mat4 S1 = glm::scale(I, glm::vec3(0.09, 0.09, 0.09));
-    glm::mat4 T = glm::translate(I, glm::vec3(0, 0.1, 0));
-    drawObjectTex(flame, texVela, P, V, M*T*S1);
+    glm::mat4 T = glm::translate(I, glm::vec3(0, 0.2, 0));
+    drawObjectMat(flame, goldShine, P, V, M*T*S1);
+    float x= M[0][0];
+    float y= M[1][1];
+    float z= M[2][2];
+    static float vector[3]={x,y,z};
+    return vector;
 
 }
 
@@ -790,7 +820,18 @@ void funKey(GLFWwindow* window, int key  , int scancode, int action, int mods) {
         case GLFW_KEY_LEFT:  desX -= 0.5f;   break;
         case GLFW_KEY_RIGHT: desX += 0.5f;   break;
         case GLFW_KEY_LEFT_SHIFT:    break;
+        case GLFW_KEY_SPACE:
+            if(action==GLFW_PRESS) {
+                contadorVelas+=1;
+                if (contadorVelas % 2 == 1) {
+                    velas = 0;
+                    velasAmb = 0;
+                }else{velas = 0.9;
+                    velasAmb = 0.2;}
+                std::cout<<"El valor de la vela es: "<<velas<<std::endl;
+            }
 
+            break;
         case GLFW_KEY_Z:
             if(mods==GLFW_MOD_SHIFT)  desZ += desZ <   7.0f ? 0.5f : 0.0f;
             else                     desZ -= desZ > -10.0f ? 0.5f : 0.0f;
