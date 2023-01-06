@@ -17,6 +17,8 @@ void drawSofa (glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawVentilador(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawAspas(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawMesa(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void drawTele(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+
 void drawPata(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawChimenea(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawCuerpoChimenea(glm::mat4 P, glm::mat4 V, glm::mat4 M);
@@ -24,8 +26,6 @@ void drawTroncos(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawAlfombra(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawBalda(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawVela(glm::mat4 P, glm::mat4 V, glm::mat4 M);
-void drawLlamaVela(glm::mat4 P, glm::mat4 V, glm::mat4 M);
-
 void drawMueble(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawVentana(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 
@@ -50,6 +50,7 @@ Model vela;
 Model flame;
 Model mueble;
 Model cortinas;
+Model tele;
 
 
 // Imagenes (texturas)
@@ -83,9 +84,13 @@ Texture muebleTex;
 Texture muebleNormal;
 Texture muebleSpecular;
 
+Texture teleDif;
+Texture teleSpe;
+Texture teleNorm;
+
 // Luces y materiales
 #define   NLD 1
-#define   NLP 2
+#define   NLP 3
 #define   NLF 2
 Light     lightG;
 Light     lightD[NLD];
@@ -97,6 +102,7 @@ Material mventilador;
 Material ruby;
 Material perl;
 Material goldShine;
+Material obsidiane;
 
 Textures texSuelo;
 Textures texParedes;
@@ -104,6 +110,7 @@ Textures texParedesVert;
 Textures texParedesVertAbajo;
 Textures texChimenea;
 Textures texTroncos;
+Textures texTele;
 
 Textures texSofa;
 Textures texMesa;
@@ -124,12 +131,31 @@ float desX = 0.0;
 float rotY = 0.0;
 float desZ = 0.0;
 
-//Luminosidad
+//****Luminosidad****
 float velas=0.9;
 float velasAmb=0.2;
 int contadorVelas=0;
-float posChimenea=0;
-float posVela1=5.1;
+bool velasOn=true;
+
+//CHIMENEA
+int contadorChimenea=0;
+float chimeneaDifusa = 1;
+bool chimeneaOn=true;
+float chimeneaAmb = 0.5;
+//Plafon VENTILADOR
+int contadorPlafon=0;
+float plafonDifusa = 1;
+bool plafonOn=true;
+float plafonAmb = 0.5;
+//Television
+int contadorTele=0;
+float teleDifusa = 1;
+bool teleOn=true;
+float teleAmb = 0.1;
+
+//Posicion de las velas
+float xv1=0.0;float yv1=0.0;float zv1=0.0;
+
 
 // Movimiento de camara
 float fovy   = 60.0;
@@ -140,8 +166,7 @@ float alphaY =  0.0;
 float RTiempo = 0;
 int rotVentilador = 0;
 
-//Luces de las velas
-float xv1=0.0;float yv1=0.0;float zv1=0.0;
+
 
 int main() {
 
@@ -212,6 +237,7 @@ void configScene() {
     flame.initModel("resources/models/flame.obj");
     mueble.initModel("resources/models/bookshelf.obj");
     cortinas.initModel("resources/models/cortinas.obj");
+    tele.initModel("resources/models/TV.obj");
 
     // Imagenes (texturas)
     suelo.initTexture("resources/textures/sueloMasPequenno.jpg");
@@ -257,6 +283,9 @@ void configScene() {
     FlameNormal.initTexture("resources/textures/llamaNormal.png");
     FlameSpecular.initTexture("resources/textures/llamaSpecular.png");
 
+    teleDif.initTexture("resources/textures/programa1.jpeg");
+    teleSpe.initTexture("resources/textures/programa1Specular.png");
+    teleNorm.initTexture("resources/textures/programa1Normal.png");
 
 
     muebleTex.initTexture("resources/textures/mueble.jpg");
@@ -264,14 +293,16 @@ void configScene() {
     muebleSpecular.initTexture("resources/textures/muebleSpecular.png");
 
 
+
+
     // Luz ambiental global
     lightG.ambient = glm::vec3(0.2, 0.2, 0.2);
 
     // ****Luces direccionales****
     lightD[0].direction = glm::vec3(0.0, 0.0, 1.0);
-    lightD[0].ambient   = glm::vec3( 0.1, 0.1, 0.1);
-    lightD[0].diffuse   = glm::vec3( 0.7, 0.7, 0.7);
-    lightD[0].specular  = glm::vec3( 0.7, 0.7, 0.7);
+    lightD[0].ambient   = glm::vec3( 0.0, 0.0, 0.0);
+    lightD[0].diffuse   = glm::vec3( 0.0, 0.0, 0.0);
+    lightD[0].specular  = glm::vec3( 0.0, 0.0, 0.0);
 
 
 
@@ -290,16 +321,7 @@ void configScene() {
 
 
     //***** Luces focales*****
-    lightF[0].position    = glm::vec3(0,  0.0,  0.0);
-    lightF[0].direction   = glm::vec3( 0.0, 0.0, 0.0);
-    lightF[0].ambient     = glm::vec3( 0.0,  0.0,  0.0);
-    lightF[0].diffuse     = glm::vec3( 0.9,  0.9,  0.0);
-    lightF[0].specular    = glm::vec3( 0.0,  0.0,  0.0);
-    lightF[0].innerCutOff = 10.0;
-    lightF[0].outerCutOff = lightF[0].innerCutOff + 5.0;
-    lightF[0].c0          = 1.000;
-    lightF[0].c1          = 0.090;
-    lightF[0].c2          = 0.032;
+
     //CAMBIAR Y AÑADIR LUCES FOCALES, las focales son las que no pierden intensidad a lo largo del recorrido por el resto igual que posicionales
 
     // *****Materiales*****
@@ -318,7 +340,6 @@ void configScene() {
     mventilador.ambient   = glm::vec4( 0.05f,0.05f,0.05f,1.0f);
     mventilador.diffuse   = glm::vec4( 0.5f,0.5f,0.5f,1.0f);
     mventilador.specular  = glm::vec4(0.7f,0.7f,0.7f,1.0f);
-    mventilador.emissive  = glm::vec4(0.7,0.7,0.7,0.7);
     mventilador.shininess = 10.0f;
 
     ruby.ambient   = glm::vec4(0.174500, 0.011750, 0.011750, 0.55);
@@ -338,6 +359,12 @@ void configScene() {
     goldShine.specular  = glm::vec4(0.628281f, 0.555802f, 0.366065f, 1.0f);
     goldShine.emissive  = glm::vec4(1,0.62,0,1);
     goldShine.shininess = 51.2f;
+
+    obsidiane.ambient   = glm::vec4( 0.05375f, 0.05f, 0.06625f, 0.82f);
+    obsidiane.diffuse   = glm::vec4(0.18275f, 0.17f, 0.22525f, 0.82f);
+    obsidiane.specular  = glm::vec4(0.332741f, 0.328634f, 0.346435f, 0.82f );
+    obsidiane.emissive  = glm::vec4(0,0,0,0);
+    obsidiane.shininess = 38.4f;
 
 
     texSuelo.diffuse   = suelo.getTexture();
@@ -395,6 +422,12 @@ void configScene() {
     texVela.normal    = velaTex.getTexture();
     texVela.shininess = 10.0;
 
+    texTele.diffuse  = teleDif.getTexture();
+    texTele.specular  = teleSpe.getTexture();
+    texTele.emissive  = noEmissive.getTexture();
+    texTele.normal  = teleNorm.getTexture();
+    texTele.shininess  = 10;
+
     texMueble.diffuse  = muebleTex.getTexture();
     texMueble.specular  = muebleSpecular.getTexture();
     texMueble.emissive  = noEmissive.getTexture();
@@ -411,15 +444,50 @@ void configScene() {
 }
 
 void renderScene() {
+
+    //Algunas luces tenemos que meterlas dentro del bucle en render Scene porque se encienden y se apagan t0do el rato
     //Vela 1
     lightP[1].position    = glm::vec3(xv1, yv1, zv1);
-    //std::cout<<lightP[1].position[0]<<lightP[1].position[1]<<lightP[1].position[2]<<std::endl;
     lightP[1].ambient     = glm::vec3(velasAmb, velasAmb, velasAmb);
     lightP[1].diffuse     = glm::vec3(velas, velas, velas);
     lightP[1].specular    = glm::vec3(velas, velas, velas);
     lightP[1].c0          = 1.00;
     lightP[1].c1          = 0.6;
     lightP[1].c2          = 0.3;
+    //Chimenea
+    lightP[2].position    = glm::vec3(0, 0.5, -9.2);
+    lightP[2].ambient     = glm::vec3(chimeneaAmb, chimeneaAmb, chimeneaAmb);
+    lightP[2].diffuse     = glm::vec3(chimeneaDifusa, chimeneaDifusa, chimeneaDifusa);
+    lightP[2].specular    = glm::vec3(chimeneaDifusa, chimeneaDifusa, chimeneaDifusa);
+    lightP[2].c0          = 1.00;
+    lightP[2].c1          = 0.8;
+    lightP[2].c2          = 0.45;
+
+    //LUZ DEL VENTILADOR
+    lightF[0].direction   = glm::vec3( 0.0, -9, 0.0);
+    lightF[0].position    = glm::vec3(0,  9,  0.0);
+    lightF[0].ambient     = glm::vec3( plafonAmb,  plafonAmb,  plafonAmb);
+    lightF[0].diffuse     = glm::vec3( plafonDifusa,  plafonDifusa,  plafonDifusa);
+    lightF[0].specular    = glm::vec3( plafonDifusa,  plafonDifusa,  plafonDifusa);
+    lightF[0].innerCutOff = 5.0;
+    lightF[0].outerCutOff = lightF[0].innerCutOff + 25.0;
+    lightF[0].c0          = 1.000;
+    lightF[0].c1          = 0.20;
+    lightF[0].c2          = 0.1;
+    //Con la siguiente linea le damos una ligera iluminacion al material del plafon cuando esta encendida
+    mventilador.emissive  = glm::vec4(plafonDifusa-plafonAmb/2,plafonDifusa-plafonAmb/2,plafonDifusa-plafonAmb/2,plafonDifusa-plafonAmb/2);
+    //LUZ TELE
+    lightF[1].position    = glm::vec3(-9.2, 2.2, -3.5);
+    lightF[1].direction   = glm::vec3( 9.2, 1, 0.0);
+    lightF[1].ambient     = glm::vec3( teleAmb, teleAmb,teleAmb);
+    lightF[1].diffuse     = glm::vec3( teleDifusa,  teleDifusa,  teleDifusa);
+    lightF[1].specular    = glm::vec3( teleDifusa-3*teleAmb,  teleDifusa-3*teleAmb,  teleDifusa-3*teleAmb);
+    lightF[1].innerCutOff = 21.0;
+    lightF[1].outerCutOff = lightF[1].innerCutOff + 25.0;
+    lightF[1].c0          = 1.000;
+    lightF[1].c1          = 0.20;
+    lightF[1].c2          = 0.1;
+
 
     // Borramos el buffer de color
     glClearColor(0.0, 0.0, 0.0, 0.0);
@@ -435,9 +503,9 @@ void renderScene() {
     glm::mat4 P = glm::perspective(glm::radians(fovy), aspect, nplane, fplane);
 
     // Matriz V
-    float x = 10.0f*glm::cos(glm::radians(alphaY))*glm::sin(glm::radians(alphaX));
-    float y = 10.0f*glm::sin(glm::radians(alphaY));
-    float z = 10.0f*glm::cos(glm::radians(alphaY))*glm::cos(glm::radians(alphaX));
+    float x = 7.0f*glm::cos(glm::radians(alphaY))*glm::sin(glm::radians(alphaX));
+    float y = 7.0f*glm::sin(glm::radians(alphaY));
+    float z = 7.0f*glm::cos(glm::radians(alphaY))*glm::cos(glm::radians(alphaX));
     glm::vec3 eye   (  x+desX,   y+desY,   z+desZ);
     glm::vec3 center(0.0+desX, 4.0+desY,  0.0+desZ);
     glm::vec3 up    (0.0, 1.0,  0.0);
@@ -455,8 +523,10 @@ void renderScene() {
 
     // Dibujamos sofá
     glm::mat4 SSofa = glm::scale(I, glm::vec3(1.25, 1, 1));
-    glm::mat4 TSofa = glm::translate(I, glm::vec3(-8, 0, -8.5));
-    drawSofa(P, V, TSofa*SSofa);
+    glm::mat4 TSofa = glm::translate(I, glm::vec3(-3, 0, -3.5));
+    glm::mat4 Ry270 = glm::rotate(I, glm::radians(270.0f), glm::vec3(0, 1, 0));
+
+    drawSofa(P, V, TSofa*SSofa*Ry270);
 
     // Dibujamos ventilador (Iván)
     glm::mat4 SVentilador = glm::scale(I, glm::vec3(2.5, 1.4, 2.5));
@@ -473,17 +543,20 @@ void renderScene() {
     drawBalda(P,V,TBalda);
 
     // Dibujamos mesa (Iván)
-    glm::mat4 TMesa = glm::translate(I, glm::vec3(-8, 0, -5));
-    drawMesa(P, V, TMesa);
+    glm::mat4 TMesa = glm::translate(I, glm::vec3(-8.6, 0, -4.5));
+    drawMesa(P, V, TMesa*Ry270);
+
+    //Dibujamos Tele(Raúl)
+    glm::mat4 TTele = glm::translate(I, glm::vec3(-9.2, 1.3, -3.5));
+
+    drawTele(P,V,TTele*Ry270);
 
     // Dibujamos alfombra(Raúl)
     drawAlfombra(P,V,TMesa);
 
     // Dibujamos velas (Iván)
-    glm::mat4 TVela = glm::translate(I, glm::vec3(8, 5.5, -9.8));
+    glm::mat4 TVela = glm::translate(I, glm::vec3(8, 5.1, -9.8));
     drawVela(P,V,I*TVela);
-    glm::mat4 Tllama = glm::translate(I, glm::vec3(8, posVela1, -9.8));
-    drawLlamaVela(P,V,I*Tllama);
     xv1=8;yv1=5.5;zv1=-9.8;
 
     // Dibujamos mueble con libros (Iván)
@@ -624,8 +697,9 @@ void drawTroncos(glm::mat4 P, glm::mat4 V, glm::mat4 M){
     //DIBUJAMOS LA LLAMA
     glm::mat4 Tll = glm::translate(I, glm::vec3(0, 2.4, -0.25));
 
-    glm::mat4 SLL = glm::scale(I, glm::vec3(0.5, 0.5, 0.5));
-    drawObjectMat(flame, goldShine, P, V, M*Tll*SLL);
+    glm::mat4 SLL = glm::scale(I, glm::vec3(0.5, 0.8, 0.5));
+    if(chimeneaOn)
+        drawObjectMat(flame, goldShine, P, V, M*Tll*SLL);
 
 
 
@@ -733,6 +807,28 @@ void drawMesa(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     drawObjectTex(cube, texMesa, P, V, M*TTablero*STablero);
 
 }
+void drawTele(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+
+
+    glm::mat4 Ry =glm::rotate(I, glm::radians(180.0f), glm::vec3(0, 1, 0));
+    glm::mat4 Rx =glm::rotate(I, glm::radians(180.0f), glm::vec3(1, 0, 0));
+    glm::mat4 Rz =glm::rotate(I, glm::radians(180.0f), glm::vec3(0, 0, 1));
+
+
+    glm::mat4 R90x =glm::rotate(I, glm::radians(90.0f), glm::vec3(1, 0, 0));
+
+    glm::mat4 S = glm::scale(I, glm::vec3(1.5, 1.5, 1.5));
+
+    drawObjectMat(tele,obsidiane , P, V, M*S*Ry);
+
+    glm::mat4 T = glm::translate(I, glm::vec3(0, 1, -0.8));
+    glm::mat4 S1 = glm::scale(I, glm::vec3(0.75, 1, 0.53));
+    if(teleOn)
+        drawObjectTex(plane,texTele,P,V,M*T*R90x*S1);
+    //    drawObjectTex(plane,texTele,P,V,M*Rz*T*R90x*S1);
+
+}
+
 
 void drawPata(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
@@ -743,19 +839,13 @@ void drawPata(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 }
 
 void drawVela(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
-    glm::mat4 T = glm::translate(I, glm::vec3(0, -0.2, 0.1));
 
     glm::mat4 S = glm::scale(I, glm::vec3(2, 2, 2));
-    drawObjectMat(vela, ruby, P, V, M*S*T);
-
-
-
-}
-void drawLlamaVela(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
-
+    drawObjectMat(vela, ruby, P, V, M*S);
     glm::mat4 S1 = glm::scale(I, glm::vec3(0.09, 0.09, 0.09));
-    glm::mat4 T = glm::translate(I, glm::vec3(0, 0.2, 0.2));
-    drawObjectMat(flame, goldShine, P, V, M*T*S1);
+    glm::mat4 T = glm::translate(I, glm::vec3(0, 0.2, 0));
+    if(velasOn== true)
+        drawObjectMat(flame, goldShine, P, V, M*T*S1);
 
 
 }
@@ -787,7 +877,7 @@ void drawVentana(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
     glm::mat4 SCortinas = glm::scale(I, glm::vec3(1.3, 1.5, 1));
     glm::mat4 TCortinas = glm::translate(I, glm::vec3(1.2, -0.5, 0.2));
-    //drawObject(cortinas, glm::vec3(0, 0, 0), P, V, M*TCortinas*SCortinas);
+    drawObjectMat(cortinas,ruby, P, V, M*TCortinas*SCortinas);
 
 }
 
@@ -827,39 +917,80 @@ void funFramebufferSize(GLFWwindow* window, int width, int height) {
 void funKey(GLFWwindow* window, int key  , int scancode, int action, int mods) {
 
     switch(key) {
-        case GLFW_KEY_UP:    desY += 0.5f;   break;
-        case GLFW_KEY_DOWN:  desY -= 0.5f;   break;
-        case GLFW_KEY_LEFT:  desX -= 0.5f;   break;
-        case GLFW_KEY_RIGHT: desX += 0.5f;   break;
+        case GLFW_KEY_UP:    desY += desY <   7.0f ? 0.5f : 0.0f;   break;//FLECHA ARRIBA MUEVE LA CAMARA Y EL CENTER 0.5 EN EL EJE POSITIVO DE LAS Y
+        case GLFW_KEY_DOWN:  desY -= desY >   -7.0f ? 0.5f : 0.0f;   break;//FLECHA ABAJO MUEVE LA CAMARA Y EL CENTER 0.5 EN EL EJE NEGATIVO DE LAS Y
+        case GLFW_KEY_LEFT:  desX -= desX >  -7.0f ? 0.5f : 0.0f;   break;//FLECHA IZQUIERDA MUEVE LA CAMARA Y EL CENTER 0.5 EN EL EJE NEGATIVO DE LAS X
+        case GLFW_KEY_RIGHT: desX += desX <   7.0f ? 0.5f : 0.0f;   break;//FLECHA DERECHA MUEVE LA CAMARA Y EL CENTER 0.5 EN EL EJE POSITIVO DE LAS X
         case GLFW_KEY_LEFT_SHIFT:    break;
-        case GLFW_KEY_SPACE:
+        case GLFW_KEY_SPACE://SI PULSAMOS EL ESPACIO ENCENDEMOS Y APAGAMOS LAS VELAS
             if(action==GLFW_PRESS) {
                 contadorVelas+=1;
                 if (contadorVelas % 2 == 1) {
                     velas = 0;
+                    velasOn=false;
                     velasAmb = 0;
-                    posVela1=-10;
                 }else{velas = 0.9;
-                    velasAmb = 0.2;
-                     posVela1=5.1;
-                }
+                    velasOn=true;
+                    velasAmb = 0.2;}
 
             }
+            break;
+        case GLFW_KEY_C://SI PULSAMOS C ENCENDEMOS Y APAGAMOS LA CHIMENEA
 
+            if(action==GLFW_PRESS) {
+                contadorChimenea+=1;
+                if (contadorChimenea % 2 == 1) {
+                    chimeneaDifusa = 0;
+                    chimeneaOn=false;
+                    chimeneaAmb = 0;
+                }else{chimeneaDifusa = 1;
+                    chimeneaOn=true;
+                    chimeneaAmb = 0.5;}
+
+            }
             break;
-        case GLFW_KEY_Z:
-            if(mods==GLFW_MOD_SHIFT)  desZ += desZ <   7.0f ? 0.5f : 0.0f;
-            else                     desZ -= desZ > -10.0f ? 0.5f : 0.0f;
+        case GLFW_KEY_T://SI PULSAMOS T ENCENDEMOS Y APAGAMOS LA Tele
+
+            if(action==GLFW_PRESS) {
+                contadorTele+=1;
+                if (contadorTele % 2 == 1) {
+                    teleDifusa = 0;
+                    teleOn=false;
+                    teleAmb = 0;
+                }else{teleDifusa = 1;
+                    teleOn=true;
+                    teleAmb = 0.1;}
+
+            }
             break;
-        case GLFW_KEY_V:
-            if(action==GLFW_PRESS)
-                rotVentilador+=1;
+
+
+        case GLFW_KEY_Z://PULSAR Z +SHIFT IZQUIERDO  MUEVE LA CAMARA Y EL CENTER 0.5 EN EL EJE POSITIVO DE LAS Z, SIN SHIFT EN EL NEGATIVO
+            if(mods==GLFW_MOD_SHIFT)  desZ += desZ <   5.0f ? 0.5f : 0.0f;
+            else                     desZ -= desZ > -7.0f ? 0.5f : 0.0f;
             break;
-        default:
+        case GLFW_KEY_V://PULSAR V ENCIENDE Y APAGA EL VENTILADOR
+            if(mods==GLFW_MOD_SHIFT){
+                if(action==GLFW_PRESS) {
+                    contadorPlafon+=1;
+                    if (contadorPlafon % 2 == 1) {
+                        plafonDifusa = 0;
+                        plafonOn=false;
+                        plafonAmb = 0;
+                    }else{plafonDifusa = 1;
+                        plafonOn=true;
+                        plafonAmb = 0.5;}
+
+                }
+
+            }else
+                if(action==GLFW_PRESS)
+                    rotVentilador+=1;
+            break;
+        default: //CUALQUIER OTRO RESETEA EL EYE Y CENTER
             desY = 0.0f;
             desX = 0.0f;
             desZ = 0.0f;
-
             rotY = 0.0f;
             break;
     }
