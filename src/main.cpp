@@ -28,8 +28,10 @@ void drawBalda(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawVela(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawMueble(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawVentana(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void drawMecedora(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 
-void controladorTiempo();
+void controladorTiempoVent();
+void controladorTiempoMec();
 
 void funFramebufferSize(GLFWwindow* window, int width, int height);
 void funKey            (GLFWwindow* window, int key  , int scancode, int action, int mods);
@@ -51,6 +53,7 @@ Model flame;
 Model mueble;
 Model cortinas;
 Model tele;
+Model mecedora;
 
 
 // Imagenes (texturas)
@@ -88,6 +91,11 @@ Texture teleDif;
 Texture teleSpe;
 Texture teleNorm;
 
+Texture mecedoraTex;
+Texture mecedoraNormal;
+Texture mecedoraSpecular;
+
+
 // Luces y materiales
 #define   NLD 1
 #define   NLP 3
@@ -103,6 +111,7 @@ Material ruby;
 Material perl;
 Material goldShine;
 Material obsidiane;
+Material cristal;
 
 Textures texSuelo;
 Textures texParedes;
@@ -119,6 +128,8 @@ Textures texFlame;
 
 Textures texMueble;
 
+Textures texMecedora;
+
 
 // Viewport
 int w = 1000;
@@ -134,23 +145,23 @@ float desZ = 0.0;
 //****Luminosidad****
 float velas=0.9;
 float velasAmb=0.2;
-int contadorVelas=0;
-bool velasOn=true;
+int   contadorVelas=0;
+bool  velasOn=true;
 
 //CHIMENEA
-int contadorChimenea=0;
+int   contadorChimenea=0;
 float chimeneaDifusa = 1;
-bool chimeneaOn=true;
+bool  chimeneaOn=true;
 float chimeneaAmb = 0.5;
 //Plafon VENTILADOR
-int contadorPlafon=0;
+int   contadorPlafon=0;
 float plafonDifusa = 1;
-bool plafonOn=true;
+bool  plafonOn=true;
 float plafonAmb = 0.5;
 //Television
-int contadorTele=0;
+int   contadorTele=0;
 float teleDifusa = 1;
-bool teleOn=true;
+bool  teleOn=true;
 float teleAmb = 0.1;
 
 //Posicion de las velas
@@ -164,8 +175,10 @@ float alphaY =  0.0;
 
 // Rotacion por tiempo
 float RTiempo = 0;
-int rotVentilador = 0;
-
+float RTiempoMec = 0;
+float numVecesMec = 0;
+int   sumRest = 0;
+int   rotVentilador = 0;
 
 
 int main() {
@@ -223,6 +236,10 @@ void configScene() {
     // Test de profundidad
     glEnable(GL_DEPTH_TEST);
 
+    // Transparencias
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     // Shaders
     shaders.initShaders("resources/shaders/vshader.glsl","resources/shaders/fshader.glsl");
 
@@ -238,6 +255,7 @@ void configScene() {
     mueble.initModel("resources/models/bookshelf.obj");
     cortinas.initModel("resources/models/cortinas.obj");
     tele.initModel("resources/models/TV.obj");
+    mecedora.initModel("resources/models/mecedora.obj");
 
     // Imagenes (texturas)
     suelo.initTexture("resources/textures/sueloMasPequenno.jpg");
@@ -287,12 +305,13 @@ void configScene() {
     teleSpe.initTexture("resources/textures/programa1Specular.png");
     teleNorm.initTexture("resources/textures/programa1Normal.png");
 
-
     muebleTex.initTexture("resources/textures/mueble.jpg");
     muebleNormal.initTexture("resources/textures/muebleNormal.png");
     muebleSpecular.initTexture("resources/textures/muebleSpecular.png");
 
-
+    mecedoraTex.initTexture("resources/textures/mecedora.png");
+    mecedoraNormal.initTexture("resources/textures/mecedoraNormal.png");
+    mecedoraSpecular.initTexture("resources/textures/mecedoraSpecular.png");
 
 
     // Luz ambiental global
@@ -342,10 +361,10 @@ void configScene() {
     mventilador.specular  = glm::vec4(0.7f,0.7f,0.7f,1.0f);
     mventilador.shininess = 10.0f;
 
-    ruby.ambient   = glm::vec4(0.174500, 0.011750, 0.011750, 0.55);
-    ruby.diffuse   = glm::vec4(0.614240, 0.041360, 0.041360, 0.55);
-    ruby.specular  = glm::vec4(0.727811, 0.626959, 0.626959, 0.55);
-    ruby.emissive  = glm::vec4(0.000000, 0.000000, 0.000000, 1.00);
+    ruby.ambient   = glm::vec4(0.174500, 0.011750, 0.011750, 1.0);
+    ruby.diffuse   = glm::vec4(0.614240, 0.041360, 0.041360, 1.0);
+    ruby.specular  = glm::vec4(0.727811, 0.626959, 0.626959, 1.0);
+    ruby.emissive  = glm::vec4(0.000000, 0.000000, 0.000000, 1.0);
     ruby.shininess = 76.8;
 
     perl.ambient   = glm::vec4(0.25f, 0.20725f, 0.20725f, 0.922f );
@@ -365,6 +384,12 @@ void configScene() {
     obsidiane.specular  = glm::vec4(0.332741f, 0.328634f, 0.346435f, 0.82f );
     obsidiane.emissive  = glm::vec4(0,0,0,0);
     obsidiane.shininess = 38.4f;
+
+    cristal.ambient   = glm::vec4(0.25f, 0.20725f, 0.20725f, 0.5f );
+    cristal.diffuse   = glm::vec4(1.0f, 0.829f, 0.829f, 0.5f);
+    cristal.specular  = glm::vec4(0.296648f, 0.296648f, 0.296648f, 0.5f);
+    cristal.emissive  = glm::vec4(0.000000, 0.000000, 0.000000, 1.00);
+    cristal.shininess = 10.0f;
 
 
     texSuelo.diffuse   = suelo.getTexture();
@@ -439,6 +464,12 @@ void configScene() {
     texFlame.emissive=noEmissive.getTexture();
     texFlame.normal=FlameNormal.getTexture();
     texFlame.shininess = 10.0;
+
+    texMecedora.diffuse = mecedoraTex.getTexture();
+    texMecedora.specular = mecedoraSpecular.getTexture();
+    texMecedora.emissive = noEmissive.getTexture();
+    texMecedora.normal = mecedoraNormal.getTexture();
+    texMecedora.shininess = 10.0;
 
 
 }
@@ -528,47 +559,52 @@ void renderScene() {
 
     drawSofa(P, V, TSofa*SSofa*Ry270);
 
-    // Dibujamos ventilador (Iván)
+    // Dibujamos ventilador
     glm::mat4 SVentilador = glm::scale(I, glm::vec3(2.5, 1.4, 2.5));
     glm::mat4 TVentilador = glm::translate(I, glm::vec3(0, 8, 0));
     drawVentilador(P, V, TVentilador*SVentilador);
-    if(rotVentilador%2 == 0) controladorTiempo();
+    if(rotVentilador%2 == 0) controladorTiempoVent();
 
-    // Dibujamos chimenea (Raúl)
+    // Dibujamos chimenea
     glm::mat4 TChimenea = glm::translate(I, glm::vec3(0, 0, -9));
     drawChimenea(P, V, TChimenea);
 
-    //Dibujamos balda(Raúl)
+    //Dibujamos balda
     glm::mat4 TBalda = glm::translate(I, glm::vec3(8, 5, -10));
     drawBalda(P,V,TBalda);
 
-    // Dibujamos mesa (Iván)
+    // Dibujamos mesa
     glm::mat4 TMesa = glm::translate(I, glm::vec3(-8.6, 0, -4.5));
     drawMesa(P, V, TMesa*Ry270);
 
-    //Dibujamos Tele(Raúl)
+    //Dibujamos Tele
     glm::mat4 TTele = glm::translate(I, glm::vec3(-9.2, 1.3, -3.5));
 
     drawTele(P,V,TTele*Ry270);
 
-    // Dibujamos alfombra(Raúl)
+    // Dibujamos alfombra
     drawAlfombra(P,V,TMesa);
 
-    // Dibujamos velas (Iván)
+    // Dibujamos velas
     glm::mat4 TVela = glm::translate(I, glm::vec3(8, 5.1, -9.8));
     drawVela(P,V,I*TVela);
     xv1=8;yv1=5.5;zv1=-9.8;
 
-    // Dibujamos mueble con libros (Iván)
+    // Dibujamos mueble con libros
     glm::mat4 TMueble = glm::translate(I, glm::vec3(9.1, 0, 0));
     drawMueble(P, V, TMueble);
 
-    // Dibujamos ventana con cortinas (Iván)
+    // Dibujamos ventana con cortinas
     glm::mat4 SVentana = glm::scale(I, glm::vec3(1.5, 1.5, 1));
     glm::mat4 Ry90 = glm::rotate(I, glm::radians(90.0f), glm::vec3(0, 1, 0));
     glm::mat4 TVentana = glm::translate(I, glm::vec3(-10, 2.5, 3));
     drawVentana(P, V, TVentana*Ry90*SVentana);
 
+    // Dibujamos mecedora
+    glm::mat4 Ry200 = glm::rotate(I, glm::radians(200.0f), glm::vec3(0, 1, 0));
+    glm::mat4 TMecedora = glm::translate(I, glm::vec3(7, 0, -5));
+    controladorTiempoMec();
+    drawMecedora(P, V, TMecedora*Ry200);
 
 }
 
@@ -863,21 +899,32 @@ void drawVentana(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
     glm::mat4 S = glm::scale(I, glm::vec3(0.1, 1.2, 0.1));
     glm::mat4 T1 = glm::translate(I, glm::vec3(0, 1, 0));
-    drawObjectMat(cube, mventilador, P, V, M*T1*S);
+    drawObjectMat(cube, perl, P, V, M*T1*S);
 
     glm::mat4 Rz =glm::rotate(I, glm::radians(90.0f), glm::vec3(0, 0, 1));
     glm::mat4 T2 = glm::translate(I, glm::vec3(1.1, 2.1, 0));
-    drawObjectMat(cube, mventilador, P, V, M*T2*Rz*S);
+    drawObjectMat(cube, perl, P, V, M*T2*Rz*S);
 
     glm::mat4 T3 = glm::translate(I, glm::vec3(1.1, -0.1, 0));
-    drawObjectMat(cube, mventilador, P, V, M*T3*Rz*S);
+    drawObjectMat(cube, perl, P, V, M*T3*Rz*S);
 
     glm::mat4 T4 = glm::translate(I, glm::vec3(2.2, 1, 0));
-    drawObjectMat(cube, mventilador, P, V, M*T4*S);
+    drawObjectMat(cube, perl, P, V, M*T4*S);
 
-    glm::mat4 SCortinas = glm::scale(I, glm::vec3(1.3, 1.5, 1));
-    glm::mat4 TCortinas = glm::translate(I, glm::vec3(1.2, -0.5, 0.2));
-    drawObjectMat(cortinas,ruby, P, V, M*TCortinas*SCortinas);
+    // Cristal
+    glm::mat4 SCristal = glm::scale(I, glm::vec3(1, 1, 0.02));
+    glm::mat4 TCristal = glm::translate(I, glm::vec3(1.1, 1, 0));
+    glDepthMask(GL_FALSE);
+        drawObjectMat(cube, cristal, P, V, M*TCristal*SCristal);
+    glDepthMask(GL_TRUE);
+
+}
+
+void drawMecedora(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
+
+    glm::mat4 S = glm::scale(I, glm::vec3(3.5, 3.5, 3.5));
+    glm::mat4 RotTiempo = glm::rotate(I, glm::radians(RTiempoMec), glm::vec3(0, 0, 1));
+    drawObjectTex(mecedora, texMecedora, P, V, M*RotTiempo*S);
 
 }
 
@@ -1015,10 +1062,32 @@ void funCursorPos(GLFWwindow* window, double xpos, double ypos) {
 
 }
 
-void controladorTiempo() {
+void controladorTiempoVent() {
     // Giro Helices
     if(glfwGetTime()>=0.01){
         RTiempo+=6;
+        glfwSetTime(0);
+    }
+}
+
+void controladorTiempoMec() {
+    if(glfwGetTime()>=0.01){
+        if(sumRest == 0) {
+            RTiempoMec += 0.1;
+            numVecesMec += 1;
+            if(numVecesMec > 100) {
+                numVecesMec = 0;
+                sumRest = 1;
+            }
+        }
+        else if(sumRest == 1) {
+            RTiempoMec -= 0.1;
+            numVecesMec += 1;
+            if(numVecesMec > 100) {
+                numVecesMec = 0;
+                sumRest = 0;
+            }
+        }
         glfwSetTime(0);
     }
 }
