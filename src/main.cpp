@@ -8,6 +8,7 @@
 void configScene();
 void renderScene();
 void setLights(glm::mat4 P, glm::mat4 V);
+void lucesDinamicas();
 void drawObjectMat(Model &model, Material material, glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawObjectTex(Model &model, Textures textures, glm::mat4 P, glm::mat4 V, glm::mat4 M);
 
@@ -27,6 +28,8 @@ void drawAlfombra(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawBalda(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawVela(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawMueble(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+void drawRoomba(glm::mat4 P, glm::mat4 V, glm::mat4 M);
+
 void drawVentana(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 void drawMecedora(glm::mat4 P, glm::mat4 V, glm::mat4 M);
 
@@ -86,10 +89,13 @@ Texture muebleTex;
 Texture muebleNormal;
 Texture muebleSpecular;
 
-Texture teleDif;
-Texture teleSpe;
-Texture teleNorm;
+Texture tele1Dif;Texture tele2Dif;Texture tele3Dif;Texture tele4Dif;
+Texture tele1Spe;Texture tele2Spe;Texture tele3Spe;Texture tele4Spe;
+Texture tele1Norm;Texture tele2Norm;Texture tele3Norm;Texture tele4Norm;
 
+
+Texture encendido;
+Texture encendidoEmissive;
 Texture mecedoraTex;
 Texture mecedoraNormal;
 Texture mecedoraSpecular;
@@ -97,7 +103,7 @@ Texture mecedoraSpecular;
 
 // Luces y materiales
 #define   NLD 1
-#define   NLP 3
+#define   NLP 8
 #define   NLF 2
 Light     lightG;
 Light     lightD[NLD];
@@ -118,7 +124,8 @@ Textures texParedesVert;
 Textures texParedesVertAbajo;
 Textures texChimenea;
 Textures texTroncos;
-Textures texTele;
+Textures tex1Tele;Textures tex2Tele;Textures tex3Tele;Textures tex4Tele;
+Textures texEncendido;
 
 Textures texSofa;
 Textures texMesa;
@@ -141,9 +148,12 @@ float desX = 0.0;
 float rotY = 0.0;
 float desZ = 0.0;
 
+float xRoomba=0.0;
+float zRoomba=0.0;
+
 //****Luminosidad****
-float velas=0.9;
-float velasAmb=0.2;
+float velas=0.6;
+float velasAmb=0.1;
 int   contadorVelas=0;
 bool  velasOn=true;
 
@@ -162,9 +172,19 @@ int   contadorTele=0;
 float teleDifusa = 1;
 bool  teleOn=true;
 float teleAmb = 0.1;
+int canal1=true;
+int canal2=false;
+int canal3=false;
+int canal4=false;
 
 //Posicion de las velas
-float xv1=0.0;float yv1=0.0;float zv1=0.0;
+float xv1=0.0;float yv1=0.0;float zv1=0.0;//vela 1
+float xv2=0.0;float yv2=0.0;float zv2=0.0;//vela 2
+float xv3=0;float yv3=0;float zv3=0;//vela 3
+float xv4=0;float yv4=0;float zv4=0;//vela 4
+float xv5=0;float yv5=0;float zv5=0;//vela 5
+
+
 
 
 // Movimiento de camara
@@ -255,13 +275,13 @@ void configScene() {
     tele.initModel("resources/models/TV.obj");
     mecedora.initModel("resources/models/mecedora.obj");
 
-    // Imagenes (texturas)
+
+// ****Imagenes (texturas)****
     suelo.initTexture("resources/textures/sueloMasPequenno.jpg");
     sueloNormal.initTexture("resources/textures/sueloMasPequennoNormal.png");
     sueloSpecular.initTexture("resources/textures/sueloMasPequennoSpecular.png");
 
-
-        //INICIO TEXTURAS PAREDES
+    //INICIO TEXTURAS PAREDES
     paredes.initTexture("resources/textures/newBrickWall.jpg");
     paredesNormal.initTexture("resources/textures/newBrickWallNormal.png");
     paredesSpecular.initTexture("resources/textures/newBrickWallSpecular.png");
@@ -274,7 +294,7 @@ void configScene() {
     paredesVertAbajoNormal.initTexture("resources/textures/newBrickWall400Normal.png");
     paredesVertAbajoNormal.initTexture("resources/textures/newBrickWall400Specular.png");
 
-        //FINAL TEXTURAS PAREDES
+    //FINAL TEXTURAS PAREDES
 
     chimenea.initTexture("resources/textures/imgWallDiffuse.png");
     SpeChimenea.initTexture("resources/textures/imgWallSpecular.png");
@@ -283,7 +303,7 @@ void configScene() {
     troncoSpecular.initTexture("resources/textures/WoodenSpecular.jpeg");
     troncoNormal.initTexture("resources/textures/WoodenNormal.jpeg");
 
-
+    //cargar textura no emisiva
     noEmissive.initTexture("resources/textures/imgNoEmissive.png");
 
     sofa.initTexture("resources/textures/sofa.jpg");
@@ -299,9 +319,19 @@ void configScene() {
     FlameNormal.initTexture("resources/textures/llamaNormal.png");
     FlameSpecular.initTexture("resources/textures/llamaSpecular.png");
 
-    teleDif.initTexture("resources/textures/programa1.jpeg");
-    teleSpe.initTexture("resources/textures/programa1Specular.png");
-    teleNorm.initTexture("resources/textures/programa1Normal.png");
+    //cargar texturas de los prograams de tele
+    tele1Dif.initTexture("resources/textures/tele/programa1.jpg");
+    tele1Spe.initTexture("resources/textures/tele/programa1Specular.png");
+    tele1Norm.initTexture("resources/textures/tele/programa1Normal.png");
+    tele2Dif.initTexture("resources/textures/tele/programa2.jpeg");
+    tele2Spe.initTexture("resources/textures/tele/programa2Specular.png");
+    tele2Norm.initTexture("resources/textures/tele/programa2Normal.png");
+    tele3Dif.initTexture("resources/textures/tele/programa3.jpeg");
+    tele3Spe.initTexture("resources/textures/tele/programa3Specular.png");
+    tele3Norm.initTexture("resources/textures/tele/programa3Normal.png");
+    tele4Dif.initTexture("resources/textures/tele/programa4.jpeg");
+    tele4Spe.initTexture("resources/textures/tele/programa4Specular.png");
+    tele4Norm.initTexture("resources/textures/tele/programa4Normal.png");
 
     muebleTex.initTexture("resources/textures/mueble.jpg");
     muebleNormal.initTexture("resources/textures/muebleNormal.png");
@@ -311,26 +341,28 @@ void configScene() {
     mecedoraNormal.initTexture("resources/textures/mecedoraNormal.png");
     mecedoraSpecular.initTexture("resources/textures/mecedoraSpecular.png");
 
+    encendido.initTexture("resources/textures/encendido.png");
+    encendidoEmissive.initTexture("resources/textures/rojo.jpg");
+
 
     // Luz ambiental global
     lightG.ambient = glm::vec3(0.2, 0.2, 0.2);
 
     // ****Luces direccionales****
-    lightD[0].direction = glm::vec3(0.0, 0.0, 1.0);
-    lightD[0].ambient   = glm::vec3( 0.0, 0.0, 0.0);
-    lightD[0].diffuse   = glm::vec3( 0.0, 0.0, 0.0);
-    lightD[0].specular  = glm::vec3( 0.0, 0.0, 0.0);
+    lightD[0].direction = glm::vec3(-15.0, 2.0, -2.0);
+    lightD[0].position = glm::vec3(-25, 8.0, 00);
 
-
+    lightD[0].ambient   = glm::vec3( 0.01, 0.01, 0.01);
+    lightD[0].diffuse   = glm::vec3( 0.10, 0.10, 0.00);
+    lightD[0].specular  = glm::vec3( 0.10, 0.10, 0.00);
 
 
     //***** Luces posicionales******
 
-    //CAMBIAR Y AÑADIR LUCES Posicionales, las Posicionales son las que  pierden intensidad a lo largo del recorrido por el resto igual que focales
-    lightP[0].position    = glm::vec3(10.0, 3.0, 10.0);
-    lightP[0].ambient     = glm::vec3(0.2, 0.2, 0.2);
-    lightP[0].diffuse     = glm::vec3(0.9, 0.9, 0.9);
-    lightP[0].specular    = glm::vec3(0.9, 0.9, 0.9);
+    lightP[0].position    = glm::vec3(10.0, 0.0, 00.0);
+    lightP[0].ambient     = glm::vec3(0.0, 0.0, 0.0);
+    lightP[0].diffuse     = glm::vec3(0.0, 0.0, 0.0);
+    lightP[0].specular    = glm::vec3(0.0, 0.0, 0.0);
     lightP[0].c0          = 1.00;
     lightP[0].c1          = 0.22;
     lightP[0].c2          = 0.20;
@@ -339,7 +371,7 @@ void configScene() {
 
     //***** Luces focales*****
 
-    //CAMBIAR Y AÑADIR LUCES FOCALES, las focales son las que no pierden intensidad a lo largo del recorrido por el resto igual que posicionales
+   
 
     // *****Materiales*****
     mluz.ambient   = glm::vec4(0.0, 0.0, 0.0, 1.0);
@@ -377,10 +409,10 @@ void configScene() {
     goldShine.emissive  = glm::vec4(1,0.62,0,1);
     goldShine.shininess = 51.2f;
 
-    obsidiane.ambient   = glm::vec4( 0.05375f, 0.05f, 0.06625f, 0.82f);
-    obsidiane.diffuse   = glm::vec4(0.18275f, 0.17f, 0.22525f, 0.82f);
-    obsidiane.specular  = glm::vec4(0.332741f, 0.328634f, 0.346435f, 0.82f );
-    obsidiane.emissive  = glm::vec4(0,0,0,0);
+    obsidiane.ambient   = glm::vec4( 0.05375f, 0.05f, 0.06625f, 1);
+    obsidiane.diffuse   = glm::vec4(0.18275f, 0.17f, 0.22525f, 1);
+    obsidiane.specular  = glm::vec4(0.332741f, 0.328634f, 0.346435f, 1 );
+    obsidiane.emissive  = glm::vec4(0,0,0,1);
     obsidiane.shininess = 38.4f;
 
     cristal.ambient   = glm::vec4(0.25f, 0.20725f, 0.20725f, 0.5f );
@@ -445,11 +477,31 @@ void configScene() {
     texVela.normal    = velaTex.getTexture();
     texVela.shininess = 10.0;
 
-    texTele.diffuse  = teleDif.getTexture();
-    texTele.specular  = teleSpe.getTexture();
-    texTele.emissive  = noEmissive.getTexture();
-    texTele.normal  = teleNorm.getTexture();
-    texTele.shininess  = 10;
+    //AQUI EMPIEZAN LAS TEXTURAS PARA LOS DIsTINTOS CANALES DE TELEVISION
+    tex1Tele.diffuse  = tele1Dif.getTexture();
+    tex1Tele.specular  = tele1Spe.getTexture();
+    tex1Tele.emissive  = noEmissive.getTexture();
+    tex1Tele.normal  = tele1Norm.getTexture();
+    tex1Tele.shininess  = 10;
+
+    tex2Tele.diffuse  = tele2Dif.getTexture();
+    tex2Tele.specular  = tele2Spe.getTexture();
+    tex2Tele.emissive  = noEmissive.getTexture();
+    tex2Tele.normal  = tele2Norm.getTexture();
+    tex2Tele.shininess  = 10;
+
+    tex3Tele.diffuse  = tele3Dif.getTexture();
+    tex3Tele.specular  = tele3Spe.getTexture();
+    tex3Tele.emissive  = noEmissive.getTexture();
+    tex3Tele.normal  = tele3Norm.getTexture();
+    tex3Tele.shininess  = 10;
+
+    tex4Tele.diffuse  = tele4Dif.getTexture();
+    tex4Tele.specular  = tele4Spe.getTexture();
+    tex4Tele.emissive  = noEmissive.getTexture();
+    tex4Tele.normal  = tele4Norm.getTexture();
+    tex4Tele.shininess  = 10;
+    //AQUI ACABAN LAS TEXTURAS DE LOS DISTINTOS CANALES DE TELEVISION
 
     texMueble.diffuse  = muebleTex.getTexture();
     texMueble.specular  = muebleSpecular.getTexture();
@@ -469,12 +521,15 @@ void configScene() {
     texMecedora.normal = mecedoraNormal.getTexture();
     texMecedora.shininess = 10.0;
 
+    texEncendido.diffuse=encendido.getTexture();
+    texEncendido.specular=encendido.getTexture();
+    texEncendido.emissive=encendidoEmissive.getTexture();
+    texEncendido.normal=0;
+    texEncendido.shininess=10.0;
+
 
 }
-
-void renderScene() {
-
-    //Algunas luces tenemos que meterlas dentro del bucle en render Scene porque se encienden y se apagan t0do el rato
+void lucesDinamicas(){
     //Vela 1
     lightP[1].position    = glm::vec3(xv1, yv1, zv1);
     lightP[1].ambient     = glm::vec3(velasAmb, velasAmb, velasAmb);
@@ -491,8 +546,49 @@ void renderScene() {
     lightP[2].c0          = 1.00;
     lightP[2].c1          = 0.8;
     lightP[2].c2          = 0.45;
+    //Luz del Roomba
+    lightP[3].position    = glm::vec3(xRoomba, 0.33, zRoomba);
+    lightP[3].ambient     = glm::vec3(0.05, 0.0, 0.0);
+    lightP[3].diffuse     = glm::vec3(0.1, 0.0, 0.0);
+    lightP[3].specular    = glm::vec3(0.1, 0.0, 0.0);
+    lightP[3].c0          = 0.150;
+    lightP[3].c1          = 0.075;
+    lightP[3].c2          = 0.0325;
+    //Vela 2
+    lightP[4].position    = glm::vec3(xv2, yv2, zv2);
+    lightP[4].ambient     = glm::vec3(velasAmb, velasAmb, velasAmb);
+    lightP[4].diffuse     = glm::vec3(velas, velas, velas);
+    lightP[4].specular    = glm::vec3(velas, velas, velas);
+    lightP[4].c0          = 1.00;
+    lightP[4].c1          = 0.6;
+    lightP[4].c2          = 0.3;
+    //Vela 3
+    lightP[5].position    = glm::vec3(xv3, yv3, zv3);
+    lightP[5].ambient     = glm::vec3(velasAmb, velasAmb, velasAmb);
+    lightP[5].diffuse     = glm::vec3(velas, velas, velas);
+    lightP[5].specular    = glm::vec3(velas, velas, velas);
+    lightP[5].c0          = 1.00;
+    lightP[5].c1          = 0.6;
+    lightP[5].c2          = 0.3;
+    //Vela 4
+    lightP[6].position    = glm::vec3(xv4, yv4, zv4);
+    lightP[6].ambient     = glm::vec3(velasAmb, velasAmb, velasAmb);
+    lightP[6].diffuse     = glm::vec3(velas, velas, velas);
+    lightP[6].specular    = glm::vec3(velas, velas, velas);
+    lightP[6].c0          = 1.00;
+    lightP[6].c1          = 0.6;
+    lightP[6].c2          = 0.3;
+    //Vela 5
+    lightP[7].position    = glm::vec3(xv5, yv5, zv5);
+    lightP[7].ambient     = glm::vec3(velasAmb, velasAmb, velasAmb);
+    lightP[7].diffuse     = glm::vec3(velas, velas, velas);
+    lightP[7].specular    = glm::vec3(velas, velas, velas);
+    lightP[7].c0          = 1.00;
+    lightP[7].c1          = 0.6;
+    lightP[7].c2          = 0.3;
 
-    //LUZ DEL VENTILADOR
+
+    //LUZ DEL VENTILADOR/PLAFON
     lightF[0].direction   = glm::vec3( 0.0, -9, 0.0);
     lightF[0].position    = glm::vec3(0,  9,  0.0);
     lightF[0].ambient     = glm::vec3( plafonAmb,  plafonAmb,  plafonAmb);
@@ -517,6 +613,11 @@ void renderScene() {
     lightF[1].c1          = 0.20;
     lightF[1].c2          = 0.1;
 
+}
+void renderScene() {
+
+    //Algunas luces tenemos que meterlas dentro del bucle en render Scene porque se encienden y se apagan t0do el rato
+    lucesDinamicas();
 
     // Borramos el buffer de color
     glClearColor(0.0, 0.0, 0.0, 0.0);
@@ -585,24 +686,49 @@ void renderScene() {
     drawAlfombra(P,V,TMesa*Ry90);
 
     // Dibujamos velas
-    glm::mat4 TVela = glm::translate(I, glm::vec3(8, 5.1, -9.8));
-    drawVela(P,V,I*TVela);
+    glm::mat4 TVela1 = glm::translate(I, glm::vec3(8, 5.1, -9.8));
+    drawVela(P,V,I*TVela1);
     xv1=8;yv1=5.5;zv1=-9.8;
+
+    glm::mat4 TVela2 = glm::translate(I, glm::vec3(6, 3.1, -9.8));
+    drawVela(P,V,I*TVela2);
+    xv2=6;yv2=3.5;zv2=-9.8;
+
+    glm::mat4 TVela3 = glm::translate(I, glm::vec3(6.4, 3.1, -9.6));
+    drawVela(P,V,I*TVela3);
+    xv3=6.4;yv3=3.5;zv3=-9.6;
+
+    glm::mat4 TVela4 = glm::translate(I, glm::vec3(-1.5, 3.5, -9.2));
+    drawVela(P,V,I*TVela4);
+    xv4=-1.5;yv4=3.9;zv4=-9.2;
+
+    glm::mat4 TVela5 = glm::translate(I, glm::vec3(9, 3.2, 0.4));
+    drawVela(P,V,I*TVela5);
+    xv5=9;yv5=3.6;zv5=0.4;
+
+    //Dibujamos Roomba
+    glm::mat4 TRoomba = glm::translate(I, glm::vec3(0, 0, 0));
+    drawRoomba(P,V,I*TRoomba);
 
     // Dibujamos mueble con libros
     glm::mat4 TMueble = glm::translate(I, glm::vec3(9.1, 0, 0));
     drawMueble(P, V, TMueble);
 
-    // Dibujamos ventana
-    glm::mat4 SVentana = glm::scale(I, glm::vec3(1.5, 1.5, 1));
-    glm::mat4 TVentana = glm::translate(I, glm::vec3(-10, 2.5, 3));
-    drawVentana(P, V, TVentana*Ry90*SVentana);
+
 
     // Dibujamos mecedora
     glm::mat4 Ry200 = glm::rotate(I, glm::radians(200.0f), glm::vec3(0, 1, 0));
     glm::mat4 TMecedora = glm::translate(I, glm::vec3(7, 0, -5));
     drawMecedora(P, V, TMecedora*Ry200);
     if(rotVentilador%2 != 0) controladorTiempoMec();
+
+
+    // Dibujamos ventana
+    glm::mat4 SVentana = glm::scale(I, glm::vec3(1.5, 1.5, 1));
+    glm::mat4 TVentana = glm::translate(I, glm::vec3(-10, 2.5, 3));
+    glDepthMask(GL_FALSE);
+    drawVentana(P, V, TVentana*Ry90*SVentana);
+    glDepthMask(GL_TRUE);
 
 }
 
@@ -613,17 +739,17 @@ void setLights(glm::mat4 P, glm::mat4 V) {
     for(int i=0; i<NLP; i++) shaders.setLight("ulightP["+toString(i)+"]",lightP[i]);
     for(int i=0; i<NLF; i++) shaders.setLight("ulightF["+toString(i)+"]",lightF[i]);
 //DIBUJA LAS ESFERITAS
-/*
+
     for(int i=0; i<NLD; i++) {
         glm::mat4 M = glm::translate(I,lightD[i].position) * glm::scale(I,glm::vec3(4));
         drawObjectMat(sphere, mluz, P, V, M);
     }
-*/
+/*
     for(int i=0; i<NLP; i++) {
         glm::mat4 M = glm::translate(I,lightP[i].position) * glm::scale(I,glm::vec3(0.021));
         drawObjectMat(sphere, mluz, P, V, M);
     }
-
+    */
     for(int i=0; i<NLF; i++) {
         glm::mat4 M = glm::translate(I,lightF[i].position) * glm::scale(I,glm::vec3(0.025));
         drawObjectMat(sphere, mluz, P, V, M);
@@ -857,9 +983,17 @@ void drawTele(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
     glm::mat4 T = glm::translate(I, glm::vec3(0, 1, -0.8));
     glm::mat4 S1 = glm::scale(I, glm::vec3(0.75, 1, 0.53));
-    if(teleOn)
-        drawObjectTex(plane,texTele,P,V,M*T*R90x*S1);
-    //    drawObjectTex(plane,texTele,P,V,M*Rz*T*R90x*S1);
+    if(teleOn){
+        if(canal1)
+            drawObjectTex(plane,tex1Tele,P,V,M*T*R90x*S1);
+        if(canal2)
+            drawObjectTex(plane,tex2Tele,P,V,M*T*R90x*S1);
+        if(canal3)
+            drawObjectTex(plane,tex3Tele,P,V,M*T*R90x*S1);
+        if(canal4)
+            drawObjectTex(plane,tex4Tele,P,V,M*T*R90x*S1);
+
+    }
 
 }
 
@@ -925,6 +1059,16 @@ void drawMecedora(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
     drawObjectTex(mecedora, texMecedora, P, V, M*RotTiempo*S);
 
 }
+void drawRoomba(glm::mat4 P, glm::mat4 V, glm::mat4 M){
+    glm::mat4 S1= glm::scale(I,glm::vec3(0.75,0.12,0.75));
+    glm::mat4 T1 = glm::translate(I, glm::vec3(xRoomba, 0.2, zRoomba));
+    drawObjectMat(cylinder,obsidiane,P,V,T1*S1*M);
+
+    glm::mat4 S2= glm::scale(I,glm::vec3(0.15,0.01,0.15));
+    glm::mat4 T2 = glm::translate(I, glm::vec3(xRoomba, 0.33, zRoomba));
+    drawObjectTex(cylinder,texEncendido,P,V,T2*S2*M);
+
+}
 
 void drawObjectMat(Model &model, Material material, glm::mat4 P, glm::mat4 V, glm::mat4 M) {
 
@@ -964,8 +1108,21 @@ void funKey(GLFWwindow* window, int key  , int scancode, int action, int mods) {
     switch(key) {
         case GLFW_KEY_UP:    desY += desY <   7.0f ? 0.5f : 0.0f;   break;//FLECHA ARRIBA MUEVE LA CAMARA Y EL CENTER 0.5 EN EL EJE POSITIVO DE LAS Y
         case GLFW_KEY_DOWN:  desY -= desY >   -7.0f ? 0.5f : 0.0f;   break;//FLECHA ABAJO MUEVE LA CAMARA Y EL CENTER 0.5 EN EL EJE NEGATIVO DE LAS Y
-        case GLFW_KEY_LEFT:  desX -= desX >  -7.0f ? 0.5f : 0.0f;   break;//FLECHA IZQUIERDA MUEVE LA CAMARA Y EL CENTER 0.5 EN EL EJE NEGATIVO DE LAS X
-        case GLFW_KEY_RIGHT: desX += desX <   7.0f ? 0.5f : 0.0f;   break;//FLECHA DERECHA MUEVE LA CAMARA Y EL CENTER 0.5 EN EL EJE POSITIVO DE LAS X
+        case GLFW_KEY_LEFT:  desX -= desX >  -8.0f ? 0.5f : 0.0f;   break;//FLECHA IZQUIERDA MUEVE LA CAMARA Y EL CENTER 0.5 EN EL EJE NEGATIVO DE LAS X
+        case GLFW_KEY_RIGHT: desX += desX <   8.0f ? 0.5f : 0.0f;   break;//FLECHA DERECHA MUEVE LA CAMARA Y EL CENTER 0.5 EN EL EJE POSITIVO DE LAS X
+
+        case GLFW_KEY_W:    zRoomba -= zRoomba >  -7.5f ? 0.5f : 0.0f;   break;//W  MUEVE EL Roomba en el eje positivo de las Z
+        case GLFW_KEY_S:    zRoomba += zRoomba <   7.5f ? 0.5f : 0.0f;   break;//W  MUEVE EL Roomba en el eje negativo de las Z
+        case GLFW_KEY_A:    xRoomba -= xRoomba >   -7.5f ? 0.5f : 0.0f;   break;//A  MUEVE EL Roomba en el eje negativo de las X
+        case GLFW_KEY_D:    xRoomba += xRoomba <   7.5f ? 0.5f : 0.0f;   break;//D  MUEVE EL Roomba en el eje positivo de las X
+
+        case GLFW_KEY_1:    canal1=true;canal2=false;canal3=false,canal4=false;   break;//pone el canal 1 al pulsar la tecla1
+        case GLFW_KEY_2:    canal1=false;canal2=true;canal3=false,canal4=false;   break;//pone el canal 2 al pulsar la tecla2
+        case GLFW_KEY_3:    canal1=false;canal2=false;canal3=true,canal4=false;   break;//pone el canal 3 al pulsar la tecla3
+        case GLFW_KEY_4:    canal1=false;canal2=false;canal3=false,canal4=true;   break;//pone el canal 4 al pulsar la tecla4
+
+
+
         case GLFW_KEY_LEFT_SHIFT:    break;
         case GLFW_KEY_SPACE://SI PULSAMOS EL ESPACIO ENCENDEMOS Y APAGAMOS LAS VELAS
             if(action==GLFW_PRESS) {
@@ -974,9 +1131,9 @@ void funKey(GLFWwindow* window, int key  , int scancode, int action, int mods) {
                     velas = 0;
                     velasOn=false;
                     velasAmb = 0;
-                }else{velas = 0.9;
+                }else{velas = 0.6;
                     velasOn=true;
-                    velasAmb = 0.2;}
+                    velasAmb = 0.1;}
 
             }
             break;
