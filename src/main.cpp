@@ -51,7 +51,6 @@ Model tronco;
 Model vela;
 Model flame;
 Model mueble;
-Model cortinas;
 Model tele;
 Model mecedora;
 
@@ -253,7 +252,6 @@ void configScene() {
     vela.initModel("resources/models/vela_1.obj");
     flame.initModel("resources/models/flame.obj");
     mueble.initModel("resources/models/bookshelf.obj");
-    cortinas.initModel("resources/models/cortinas.obj");
     tele.initModel("resources/models/TV.obj");
     mecedora.initModel("resources/models/mecedora.obj");
 
@@ -583,7 +581,8 @@ void renderScene() {
     drawTele(P,V,TTele*Ry270);
 
     // Dibujamos alfombra
-    drawAlfombra(P,V,TMesa);
+    glm::mat4 Ry90 = glm::rotate(I, glm::radians(90.0f), glm::vec3(0, 1, 0));
+    drawAlfombra(P,V,TMesa*Ry90);
 
     // Dibujamos velas
     glm::mat4 TVela = glm::translate(I, glm::vec3(8, 5.1, -9.8));
@@ -594,17 +593,16 @@ void renderScene() {
     glm::mat4 TMueble = glm::translate(I, glm::vec3(9.1, 0, 0));
     drawMueble(P, V, TMueble);
 
-    // Dibujamos ventana con cortinas
+    // Dibujamos ventana
     glm::mat4 SVentana = glm::scale(I, glm::vec3(1.5, 1.5, 1));
-    glm::mat4 Ry90 = glm::rotate(I, glm::radians(90.0f), glm::vec3(0, 1, 0));
     glm::mat4 TVentana = glm::translate(I, glm::vec3(-10, 2.5, 3));
     drawVentana(P, V, TVentana*Ry90*SVentana);
 
     // Dibujamos mecedora
     glm::mat4 Ry200 = glm::rotate(I, glm::radians(200.0f), glm::vec3(0, 1, 0));
     glm::mat4 TMecedora = glm::translate(I, glm::vec3(7, 0, -5));
-    controladorTiempoMec();
     drawMecedora(P, V, TMecedora*Ry200);
+    if(rotVentilador%2 != 0) controladorTiempoMec();
 
 }
 
@@ -743,9 +741,9 @@ void drawTroncos(glm::mat4 P, glm::mat4 V, glm::mat4 M){
 }
 void drawAlfombra(glm::mat4 P, glm::mat4 V, glm::mat4 M){
 
-    glm::mat4 T = glm::translate(I, glm::vec3(1, 0, 0.5));
+    glm::mat4 T = glm::translate(I, glm::vec3(-1, 0, 2));
     glm::mat4 S = glm::scale(I, glm::vec3(1.75*1.25, 0.01, 1*1.25));
-    //drawObject(sphere, glm::vec3(1, 1, 1), P, V, M*T*S);
+    drawObjectMat(sphere, ruby, P, V, M*T*S);
 
 }
 void drawBalda(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
@@ -1066,6 +1064,22 @@ void controladorTiempoVent() {
     // Giro Helices
     if(glfwGetTime()>=0.01){
         RTiempo+=6;
+        if(sumRest == 0) {
+            RTiempoMec += 0.1;
+            numVecesMec += 1;
+            if(numVecesMec > 100) {
+                numVecesMec = 0;
+                sumRest = 1;
+            }
+        }
+        else if(sumRest == 1) {
+            RTiempoMec -= 0.1;
+            numVecesMec += 1;
+            if(numVecesMec > 100) {
+                numVecesMec = 0;
+                sumRest = 0;
+            }
+        }
         glfwSetTime(0);
     }
 }
