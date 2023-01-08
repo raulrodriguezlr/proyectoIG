@@ -8,28 +8,28 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug"/>
+				<Option working_dir="C:/IG/proyectoIG/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="proyectoFinal">
-				<Option output="C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/binary/proyectoFinal.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug"/>
+				<Option output="C:/IG/proyectoIG/cmake-build-debug/binary/proyectoFinal.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/IG/proyectoIG/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="C:/Users/Raul/Desktop/IG/proyectoIG/src"/>
-					<Add directory="C:/Users/Raul/Desktop/IG/proyectoIG/../libraries2122/glew/include"/>
-					<Add directory="C:/Users/Raul/Desktop/IG/proyectoIG/../libraries2122/glfw/include"/>
-					<Add directory="C:/Users/Raul/Desktop/IG/proyectoIG/../libraries2122/glm/include"/>
-					<Add directory="C:/Users/Raul/Desktop/IG/proyectoIG/../libraries2122/assimp/include"/>
-					<Add directory="C:/Users/Raul/Desktop/IG/proyectoIG/../libraries2122/freeimage/include"/>
+					<Add directory="C:/IG/proyectoIG/src"/>
+					<Add directory="C:/IG/proyectoIG/../libraries2122/glew/include"/>
+					<Add directory="C:/IG/proyectoIG/../libraries2122/glfw/include"/>
+					<Add directory="C:/IG/proyectoIG/../libraries2122/glm/include"/>
+					<Add directory="C:/IG/proyectoIG/../libraries2122/assimp/include"/>
+					<Add directory="C:/IG/proyectoIG/../libraries2122/freeimage/include"/>
 					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/9.2.0/include/c++"/>
 					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/9.2.0/include/c++/mingw32"/>
 					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/9.2.0/include/c++/backward"/>
@@ -38,25 +38,25 @@
 					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/9.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 proyectoFinal"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 proyectoFinal"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="proyectoFinal/fast">
-				<Option output="C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/binary/proyectoFinal.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug"/>
+				<Option output="C:/IG/proyectoIG/cmake-build-debug/binary/proyectoFinal.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/IG/proyectoIG/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="C:/Users/Raul/Desktop/IG/proyectoIG/src"/>
-					<Add directory="C:/Users/Raul/Desktop/IG/proyectoIG/../libraries2122/glew/include"/>
-					<Add directory="C:/Users/Raul/Desktop/IG/proyectoIG/../libraries2122/glfw/include"/>
-					<Add directory="C:/Users/Raul/Desktop/IG/proyectoIG/../libraries2122/glm/include"/>
-					<Add directory="C:/Users/Raul/Desktop/IG/proyectoIG/../libraries2122/assimp/include"/>
-					<Add directory="C:/Users/Raul/Desktop/IG/proyectoIG/../libraries2122/freeimage/include"/>
+					<Add directory="C:/IG/proyectoIG/src"/>
+					<Add directory="C:/IG/proyectoIG/../libraries2122/glew/include"/>
+					<Add directory="C:/IG/proyectoIG/../libraries2122/glfw/include"/>
+					<Add directory="C:/IG/proyectoIG/../libraries2122/glm/include"/>
+					<Add directory="C:/IG/proyectoIG/../libraries2122/assimp/include"/>
+					<Add directory="C:/IG/proyectoIG/../libraries2122/freeimage/include"/>
 					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/9.2.0/include/c++"/>
 					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/9.2.0/include/c++/mingw32"/>
 					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/9.2.0/include/c++/backward"/>
@@ -65,55 +65,55 @@
 					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/9.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 proyectoFinal/fast"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 proyectoFinal/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug"/>
+				<Option working_dir="C:/IG/proyectoIG/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug"/>
+				<Option working_dir="C:/IG/proyectoIG/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Raul/Desktop/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/IG/proyectoIG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/Raul/Desktop/IG/proyectoIG/src/Model.cpp">
+		<Unit filename="C:/IG/proyectoIG/src/Model.cpp">
 			<Option target="proyectoFinal"/>
 		</Unit>
-		<Unit filename="C:/Users/Raul/Desktop/IG/proyectoIG/src/Model.h">
+		<Unit filename="C:/IG/proyectoIG/src/Model.h">
 			<Option target="proyectoFinal"/>
 		</Unit>
-		<Unit filename="C:/Users/Raul/Desktop/IG/proyectoIG/src/Shaders.cpp">
+		<Unit filename="C:/IG/proyectoIG/src/Shaders.cpp">
 			<Option target="proyectoFinal"/>
 		</Unit>
-		<Unit filename="C:/Users/Raul/Desktop/IG/proyectoIG/src/Shaders.h">
+		<Unit filename="C:/IG/proyectoIG/src/Shaders.h">
 			<Option target="proyectoFinal"/>
 		</Unit>
-		<Unit filename="C:/Users/Raul/Desktop/IG/proyectoIG/src/Texture.cpp">
+		<Unit filename="C:/IG/proyectoIG/src/Texture.cpp">
 			<Option target="proyectoFinal"/>
 		</Unit>
-		<Unit filename="C:/Users/Raul/Desktop/IG/proyectoIG/src/Texture.h">
+		<Unit filename="C:/IG/proyectoIG/src/Texture.h">
 			<Option target="proyectoFinal"/>
 		</Unit>
-		<Unit filename="C:/Users/Raul/Desktop/IG/proyectoIG/src/main.cpp">
+		<Unit filename="C:/IG/proyectoIG/src/main.cpp">
 			<Option target="proyectoFinal"/>
 		</Unit>
-		<Unit filename="C:/Users/Raul/Desktop/IG/proyectoIG/CMakeLists.txt">
+		<Unit filename="C:/IG/proyectoIG/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>
