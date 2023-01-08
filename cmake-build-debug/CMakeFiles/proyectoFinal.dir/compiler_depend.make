@@ -765,8 +765,6 @@ CMakeFiles/proyectoFinal.dir/src/main.cpp.obj: ../src/main.cpp \
   C:/MinGW/lib/gcc/mingw32/9.2.0/include/c++/bits/ostream.tcc \
   C:/MinGW/lib/gcc/mingw32/9.2.0/include/c++/istream \
   C:/MinGW/lib/gcc/mingw32/9.2.0/include/c++/bits/istream.tcc \
-  C:/MinGW/lib/gcc/mingw32/9.2.0/include/c++/ctime \
-  C:/MinGW/include/time.h \
   C:/IG/libraries2122/glew/include/GL/glew.h \
   C:/MinGW/include/inttypes.h \
   C:/MinGW/include/GL/glu.h \
@@ -1512,5 +1510,3 @@ C:/IG/libraries2122/glm/include/glm/gtc/matrix_transform.inl:
 C:/IG/libraries2122/freeimage/include/freeImage.h:
 
 ../src/main.cpp:
-
-C:/MinGW/lib/gcc/mingw32/9.2.0/include/c++/ctime:
